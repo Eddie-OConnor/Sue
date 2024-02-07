@@ -1,0 +1,14 @@
+- specific error if openai is out of monthly budget
+- questions to ask to asses possible recipes
+    - what ingredients do you have? are there any that you need or really want to use?
+    - can you go to the store for additional ingredients?
+    - how many people are you cooking for?
+    - do you want leftovers?
+    - how much time do you have?
+    - any allergies or dislikes?
+    - what sort of cooking equipment do you have or want to use?
+- load at least 3 recipes with a title, visual, and clickable link
+- responsive design, mobile first
+- perhaps tailscale or bootstrap for results animation
+- random cooking gifs as loading icons, swedish chef too
+- ai generated chef mascot
