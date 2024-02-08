@@ -9,19 +9,17 @@
 const ingredients = 'chicken breast, rice, green beans, tomato sauce, a full spice cabinet'
 const store = 'no'
 const people = '6'
-const leftovers = 'yes'
 const time = '3 hours'
-const allergies = 'gluten and dairy'
 const cookingEquipment = 'stove top, standard pots and pans, oven, crockpot'
 
-async function getRecipes(one, two, three, four, five, six, seven){
+async function getRecipes(one, two, three, four, five){
     try {
-        const response = await fetch('/.netlify/functions/fetchAI', {
+        const response = await fetch('/.netlify/functions/fetchAI', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({one, two, three, four, five, six, seven})
+            body: JSON.stringify({one, two, three, four, five})
         })
         if(response.ok){
             const data = await response.json()
@@ -33,4 +31,4 @@ async function getRecipes(one, two, three, four, five, six, seven){
     }
 }
 
-getRecipes(ingredients, store, people, leftovers, time, allergies, cookingEquipment)
+// getRecipes(ingredients, store, people, time, cookingEquipment)
