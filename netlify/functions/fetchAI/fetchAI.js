@@ -14,11 +14,28 @@ const handler = async (event) => {
     }
 }
 
-async function generateRecipes(one, two, three, four, five, six) {
+async function generateRecipes(one, two, three, four, five) {
     const messages = [
         {
             role: 'system',
-            content: `You are a virtual cookbook assistant. Within 10 seconds, you provide 3 recipe URLs that adhere to the user submitted parameters of ${one}, ${two}, ${three}, ${four}, and ${five}`
+            content: `You are a virtual cookbook assistant. Based on user answers to five below questions, you provide a recipe URL
+            that adheres to the parameters. Do not repeat recipes.
+
+            Question: what ingredients do want to use?
+            Answer: ${one}
+
+            Question: Can you (or do you care to) go to the store for additional ingredients not mentioned above?
+            Answer: ${two}
+
+            Question: How many people are you cooking for?
+            Answer: ${three}
+
+            Question: How much time do you have?
+            Answer: ${four}
+
+            Question: what sort of cooking equipment do you have or want to use?
+            Answer: ${five}
+            `
         },
         {
             role: 'user',
@@ -27,8 +44,9 @@ async function generateRecipes(one, two, three, four, five, six) {
     ]
     try {
         const response = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-3.5-turbo-0125',
             messages: messages,
+            n: 3
         })
         console.log(response)
         return response

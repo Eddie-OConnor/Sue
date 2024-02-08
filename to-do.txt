@@ -6,6 +6,9 @@
     - how much time do you have?
     - any allergies or dislikes?
     - what sort of cooking equipment do you have or want to use?
+- reduce response clutter
+    - just a 2 sentence recipe description and/or how it matches their preferences
+    - no intros such as "great!" or "thanks!"
 - load at least 3 recipes with a title, visual, and clickable link
 - responsive design, mobile first
 - perhaps tailscale or bootstrap for results animation

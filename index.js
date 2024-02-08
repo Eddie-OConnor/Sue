@@ -1,11 +1,3 @@
-// - what ingredients do you have? are there any that you need or really want to use?
-// - can you go to the store for additional ingredients?
-// - how many people are you cooking for?
-// - do you want leftovers?
-// - how much time do you have?
-// - any allergies or dislikes?
-// - what sort of cooking equipment do you have or want to use?
-
 const ingredients = 'chicken breast, rice, green beans, tomato sauce, a full spice cabinet'
 const store = 'no'
 const people = '6'
@@ -31,4 +23,4 @@ async function getRecipes(one, two, three, four, five){
     }
 }
 
-// getRecipes(ingredients, store, people, time, cookingEquipment)
+getRecipes(ingredients, store, people, time, cookingEquipment)
