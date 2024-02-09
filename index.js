@@ -24,4 +24,4 @@ async function getRecipes(one, two, three, four, five, six){
     }
 }
 
-getRecipes(ingredients, store, people, time, equipment, allergicDislike)
+// getRecipes(ingredients, store, people, time, equipment, allergicDislike)

@@ -1,0 +1,1 @@
+export const serpApiKey = process.env.SERP_API_KEY

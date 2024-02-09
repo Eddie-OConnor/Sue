@@ -2,15 +2,16 @@
     "name": "project",
     "type": "module",
     "dependencies": {
-      "openai": "^4.19.1"
+        "openai": "^4.19.1",
+        "serpapi": "^2.0.0"
     },
     "devDependencies": {
-      "vite": "latest"
+        "vite": "latest"
     },
     "scripts": {
-      "start": "vite",
-      "dev": "vite",
-      "build": "vite build",
-      "preview": "vite preview"
+        "start": "vite",
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
     }
-  }
+}

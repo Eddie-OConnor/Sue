@@ -1,4 +1,5 @@
 import { openai } from '../../../config/openai.config'
+import { search } from '../../functions/fetchSERP/fetchSERP'
 
 const handler = async (event) => {
     try {
@@ -15,15 +16,11 @@ const handler = async (event) => {
 }
 
 async function generateRecipes(one, two, three, four, five, six) {
-    const messages = [
-        {
-            role: 'system',
-            content: `You are a virtual cookbook assistant. You provide a recipe from the web 
-            that adheres to user answer parameters. Include recipe name, URL, and 
-            description. Each should be an object within the response choice. Describe what it is 
-            and why it is a good fit for their needs in 2 sentences or less. Do not repeat recipes.
-            Do not start descriptions with words like "thanks!" or "great!" Only use real live URLs. Be
-            as truthful as possible.
+    const instructions = 
+            `You are a virtual cookbook assistant. You search the web and provide a recipe that 
+            adheres to parameters per a users answers to the below questions. Include recipe name, URL, and 
+            description. Describe what it is and why it is a good fit for their needs in 2 sentences 
+            or less. Do not repeat recipes. Do not start descriptions with words like "thanks!" or "great!"
 
             Question: What ingredients do want to use?
             Answer: ${one}
@@ -43,18 +40,12 @@ async function generateRecipes(one, two, three, four, five, six) {
             Question: Allergies or dislikes that should be excluded from ingredients?
             Answer: ${six}
             `
-        },
-        {
-            role: 'user',
-            content:`${one}, ${two}, ${three}, ${four}, ${five}, and ${six}`
-        }
-    ]
     try {
-        const response = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo-0125',
-            messages: messages,
-            n: 3,
-            temperature: .5
+        const response = await openai.beta.assistants.create({
+            instructions: instructions,
+            name: 'Cookbook Assistant',
+            tools: search,
+            model: 'gpt-4',
         })
         return response
     } catch (e) {
