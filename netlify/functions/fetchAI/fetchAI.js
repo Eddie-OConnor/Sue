@@ -1,5 +1,5 @@
 import { openai } from '../../../config/openai.config'
-import { search } from '../../functions/fetchSERP/fetchSERP'
+import { serpApiKey } from '../../../config/serpApi.config'
 
 const handler = async (event) => {
     try {
@@ -11,16 +11,18 @@ const handler = async (event) => {
         }
     } catch (e) {
         console.error('error:', e)
-        return { statusCode: 500, body: error.toString() }
+        return { statusCode: 500, body: e.toString() }
     }
 }
 
+
 async function generateRecipes(one, two, three, four, five, six) {
     const instructions = 
-            `You are a virtual cookbook assistant. You search the web and provide a recipe that 
-            adheres to parameters per a users answers to the below questions. Include recipe name, URL, and 
-            description. Describe what it is and why it is a good fit for their needs in 2 sentences 
-            or less. Do not repeat recipes. Do not start descriptions with words like "thanks!" or "great!"
+            `You are a virtual cookbook assistant. You digest the users' answers to the below questions. 
+            Search the web using the function within 'tools' to find a recipe that adheres to the required 
+            parameters. Include recipe name, URL, and description in your response. Describe what it is 
+            and why it is a good fit for their needs in 2 sentences or less. Do not repeat recipes. Do not 
+            start descriptions with words like "thanks!" or "great!"
 
             Question: What ingredients do want to use?
             Answer: ${one}
@@ -44,13 +46,51 @@ async function generateRecipes(one, two, three, four, five, six) {
         const response = await openai.beta.assistants.create({
             instructions: instructions,
             name: 'Cookbook Assistant',
-            tools: search,
+            tools: functionObj,
             model: 'gpt-4',
         })
+        console.log(response)
         return response
     } catch (e) {
         console.error('error generating recipes', e)
     }
 }
+
+
+const functionObj = [
+    {
+        type: 'function',
+        function: {
+            name: 'google',
+            description: 'search the web using the Google search engine.',
+            parameters: {
+                type: "object",
+                properties: {
+                    search: {
+                        type: 'string', description: 'recipe search query'
+                    }
+                },
+                required: ['search']
+            }
+        }
+    }
+]
+
+
+async function google(query) {
+    try {
+        const response = await getJson({
+            engine: 'google',
+            api_key: serpApiKey,
+            q: query,
+        });
+        console.log('searched!')
+        console.log(response)
+        return response;
+    } catch (e) {
+        console.error('error with SERP API', e)
+    }
+}
+
 
 export { handler }
