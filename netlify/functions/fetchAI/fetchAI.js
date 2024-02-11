@@ -78,13 +78,13 @@ const functionObj = [
 
 
 async function google(query) {
+    console.log('searched!')
     try {
         const response = await getJson({
             engine: 'google',
             api_key: serpApiKey,
             q: query,
         });
-        console.log('searched!')
         console.log(response)
         return response;
     } catch (e) {
