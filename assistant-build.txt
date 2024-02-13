@@ -1,0 +1,40 @@
+async function createAssistant() {
+    const instructions = 
+            `You are a virtual cookbook assistant. You recommend a recipe 
+            that adheres to the required parameters based on user answers.
+            `
+    try {
+        const response = await openai.beta.assistants.create({
+            instructions: instructions,
+            name: 'Cookbook Assistant',
+            tools: functionObj,
+            model: 'gpt-4',
+        })
+        console.log(response)
+    } catch (e) {
+        console.error('error generating recipes', e)
+    }
+}
+
+const functionObj = [{
+    'type': 'function',
+    'function': {
+        "name": "google",
+        "description": "return organic results from a given query comprised of a keyword or keywords.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "recipe search query"
+                }
+            },
+            "required": [
+                "query"
+            ]
+        }
+    }
+}]
+
+/* run this function once to create your assistant and obtain the assistant ID in assistant.id */
+// createAssistant()

@@ -1,18 +1,33 @@
-const ingredients = 'ground beef'
+const ingredients = 'chicken breast'
 const store = 'yes'
 const people = '2'
-const time = '1 hour'
-const equipment = 'stove top, standard pots and pans, oven, crockpot, grill'
-const allergicDislike = 'dairy and gluten'
+const time = '1 hours'
+const equipment = 'frying pan'
+const allergicDislike = 'none'
 
-async function getRecipes(one, two, three, four, five, six){
+async function getThread() {
+    try {
+        const response = await fetch('/.netlify/functions/createThread', {
+        })
+        if (response.ok) {
+            const data = await response.json()
+            return data.threadId
+        }
+    } catch (e) {
+        console.error('error fetching threadId', e)
+    }
+}
+
+// const threadId = await getThread()
+
+async function getRecipes(threadId, one, two, three, four, five, six){
     try {
         const response = await fetch('/.netlify/functions/fetchAI', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({one, two, three, four, five, six})
+            body: JSON.stringify({threadId, one, two, three, four, five, six})
         })
         if(response.ok){
             const data = await response.json()
@@ -25,4 +40,4 @@ async function getRecipes(one, two, three, four, five, six){
 }
 
 
-// getRecipes(ingredients, store, people, time, equipment, allergicDislike)
+// getRecipes(threadId, ingredients, store, people, time, equipment, allergicDislike)
