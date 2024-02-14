@@ -20,6 +20,7 @@ async function getThread() {
 
 // const threadId = await getThread()
 
+
 async function getRecipes(threadId, one, two, three, four, five, six){
     try {
         const response = await fetch('/.netlify/functions/fetchAI', { 

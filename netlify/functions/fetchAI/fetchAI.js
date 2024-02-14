@@ -1,23 +1,23 @@
 import { openai } from '../../../config/openai.config'
-// import { asstId } from '../../../config/openai.config'
+import { asstId } from '../../../config/assistant.config'
 import { serpApiKey } from '../../../config/serpApi.config'
 import { getJson } from 'serpapi';
-
-// if (!process.env.asstId) throw new Error("OpenAI Assistant ID is missing or invalid.");
-// const asstId = process.env.asstId
-const asstId = 'asst_nm6lgYxKSZTBRjRcnUqzQSse'
-
 
 const handler = async (event) => {
     try {
         const { threadId, one, two, three, four, five, six } = JSON.parse(event.body)
         await addMessage(threadId, one, two, three, four, five, six)
-        const runId = await runAssistant(threadId)
+        const runId = await runAssistant(threadId, asstId)
+
+        console.log(threadId, runId)
+
         let currentRun = await retrieveRun(threadId, runId)
         while (currentRun.status !== 'completed') {
-            await new Promise(resolve => setTimeout(resolve, 1500))
-            // console.log(currentRun.status)
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            console.log(currentRun.status)
+            currentRun = await retrieveRun(threadId, runId)
             if (currentRun.status === 'requires_action') {
+                console.log(currentRun.status)
                 const toolCalls = await currentRun.required_action.submit_tool_outputs.tool_calls
                 const parsedArguments = JSON.parse(toolCalls[0].function.arguments)
                 const apiResponse = await google(parsedArguments.query)
@@ -33,10 +33,13 @@ const handler = async (event) => {
                         ]
                     }
                 )
-                return response
+                console.log(response)
+                currentRun = await retrieveRun(threadId, runId)
             }
         }
+        console.log('run is complete!')
         const { data } = await listMessages(threadId)
+        console.log(data)
         return {
             statusCode: 200,
             body: JSON.stringify({ data }),
@@ -82,12 +85,12 @@ async function addMessage(thread, one, two, three, four, five, six) {
 }
 
 
-async function runAssistant(thread) {
+async function runAssistant(thread, assistant) {
     try {
         const response = await openai.beta.threads.runs.create(
             thread,
             {
-                assistant_id: asstId,
+                assistant_id: assistant,
                 // instructions: tbd, add more instructions to test/refine responses
             }
         )
