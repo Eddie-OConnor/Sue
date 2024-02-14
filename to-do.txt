@@ -10,4 +10,4 @@
 - perhaps tailscale or bootstrap for results animation
 - random cooking gifs as loading icons, swedish chef too
 - ai generated chef mascot
-- specific error if openai is out of monthly budget
+- specific error if openai is out of monthly budget/no remaining SERP queries
