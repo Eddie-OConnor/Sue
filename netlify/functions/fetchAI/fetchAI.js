@@ -1,21 +1,20 @@
 import { openai } from '../../../config/openai.config'
 import { asstId } from '../../../config/assistant.config'
 import { serpApiKey } from '../../../config/serpApi.config'
-import { getJson } from 'serpapi';
+import { getJson } from 'serpapi'
 
 const handler = async (event) => {
     try {
         const { threadId, one, two, three, four, five, six } = JSON.parse(event.body)
         await addMessage(threadId, one, two, three, four, five, six)
         const runId = await runAssistant(threadId, asstId)
-
-        console.log(threadId, runId)
-
         let currentRun = await retrieveRun(threadId, runId)
+
         while (currentRun.status !== 'completed') {
             await new Promise(resolve => setTimeout(resolve, 1000))
             console.log(currentRun.status)
             currentRun = await retrieveRun(threadId, runId)
+
             if (currentRun.status === 'requires_action') {
                 console.log(currentRun.status)
                 const toolCalls = await currentRun.required_action.submit_tool_outputs.tool_calls
@@ -39,7 +38,7 @@ const handler = async (event) => {
         }
         console.log('run is complete!')
         const { data } = await listMessages(threadId)
-        console.log(data)
+        console.log(data[0].content)
         return {
             statusCode: 200,
             body: JSON.stringify({ data }),
@@ -91,7 +90,9 @@ async function runAssistant(thread, assistant) {
             thread,
             {
                 assistant_id: assistant,
-                // instructions: tbd, add more instructions to test/refine responses
+                instructions: `Check that the three recipe results adhere to the user parameters from their message. 
+                If it fails, do not return the recipe. If it passes, return title, link, rating, reviews, total_time, 
+                thumbnail and a one sentance appealing description of the recipe. `
             }
         )
         return response.id
@@ -116,7 +117,7 @@ async function google(query) {
             engine: 'google',
             api_key: serpApiKey,
             q: query,
-        });
+        })
         return response['recipes_results']
     } catch (e) {
         console.error('error with SERP API', e)
