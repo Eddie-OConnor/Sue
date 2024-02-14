@@ -1,4 +1,3 @@
-- connect serp api to newly created assistant workflow in sandbox.js
 - addititional questions to ask if timeout allows
     - do you want leftovers?
     - any allergies or dislikes?
