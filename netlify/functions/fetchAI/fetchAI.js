@@ -3,26 +3,26 @@ import { asstId } from '../../../config/assistant.config'
 import { serpApiKey } from '../../../config/serpApi.config'
 import { getJson } from 'serpapi'
 
+
 const handler = async (event) => {
     try {
-        const { threadId, one, two, three, four, five, six } = JSON.parse(event.body)
-        await addMessage(threadId, one, two, three, four, five, six)
-        const runId = await runAssistant(threadId, asstId)
-        let currentRun = await retrieveRun(threadId, runId)
+        const { one, two, three, four, five, six } = JSON.parse(event.body)
+        const run = await createAndRun(asstId, one, two, three, four, five, six)
+        let currentRun = await retrieveRun(run.thread_id, run.id)
 
         while (currentRun.status !== 'completed') {
             await new Promise(resolve => setTimeout(resolve, 1000))
             console.log(currentRun.status)
-            currentRun = await retrieveRun(threadId, runId)
+            currentRun = await retrieveRun(run.thread_id, run.id)
 
             if (currentRun.status === 'requires_action') {
                 console.log(currentRun.status)
-                const toolCalls = await currentRun.required_action.submit_tool_outputs.tool_calls
+                const toolCalls = currentRun.required_action.submit_tool_outputs.tool_calls
                 const parsedArguments = JSON.parse(toolCalls[0].function.arguments)
                 const apiResponse = await google(parsedArguments.query)
                 const response = await openai.beta.threads.runs.submitToolOutputs(
-                    threadId,
-                    runId,
+                    run.thread_id, 
+                    run.id,
                     {
                         tool_outputs: [
                             {
@@ -33,11 +33,10 @@ const handler = async (event) => {
                     }
                 )
                 console.log(response)
-                currentRun = await retrieveRun(threadId, runId)
+                currentRun = await retrieveRun(run.thread_id, run.id)
             }
         }
-        console.log('run is complete!')
-        const { data } = await listMessages(threadId)
+        const { data } = await listMessages(run.thread_id)
         console.log(data[0].content)
         return {
             statusCode: 200,
@@ -50,52 +49,40 @@ const handler = async (event) => {
 }
 
 
-async function addMessage(thread, one, two, three, four, five, six) {
+async function createAndRun(assistant, one, two, three, four, five, six) {
     try {
-        const response = await openai.beta.threads.messages.create(
-            thread,
+        const response = await openai.beta.threads.createAndRun(
             {
-                role: 'user',
-                content: `
-                    Question: What ingredients do want to use?
-                    Answer: ${one}
-    
-                    Question: Can you (or do you care to) shop for additional ingredients not mentioned above?
-                    Answer: ${two}
-    
-                    Question: How many people are you cooking for?
-                    Answer: ${three}
-    
-                    Question: How much time do you have?
-                    Answer: ${four}
-    
-                    Question: What sort of cooking equipment do you have or want to use?
-                    Answer: ${five}
-    
-                    Question: Allergies or dislikes that should be excluded from ingredients?
-                    Answer: ${six}
-                    `
+                assistant_id: assistant,
+                thread: {
+                    messages: [
+                        {
+                            role: 'user',
+                            content: `
+                            Question: What ingredients do want to use?
+                            Answer: ${one}
+            
+                            Question: Can you (or do you care to) shop for additional ingredients not mentioned above?
+                            Answer: ${two}
+            
+                            Question: How many people are you cooking for?
+                            Answer: ${three}
+            
+                            Question: How much time do you have?
+                            Answer: ${four}
+            
+                            Question: What sort of cooking equipment do you want to use?
+                            Answer: ${five}
+            
+                            Question: Allergies or dislikes that should be excluded from ingredients?
+                            Answer: ${six}
+                            `
+                        }
+                    ]
+                }
             }
         )
         return response
-    } catch (e) {
-        console.error('Error adding a new message to thread: ' + thread, e)
-    }
-}
-
-
-async function runAssistant(thread, assistant) {
-    try {
-        const response = await openai.beta.threads.runs.create(
-            thread,
-            {
-                assistant_id: assistant,
-                instructions: `Check that the three recipe results adhere to the user parameters from their message. 
-                If it fails, do not return the recipe. If it passes, return title, link, rating, reviews, total_time, 
-                thumbnail and a one sentance appealing description of the recipe. `
-            }
-        )
-        return response.id
     } catch (e) {
         console.error('Error running assistant for thread: ' + thread, e)
     }
