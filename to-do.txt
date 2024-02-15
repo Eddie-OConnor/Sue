@@ -1,12 +1,5 @@
-- addititional questions to ask if timeout allows
-    - do you want leftovers?
-    - any allergies or dislikes?
-- reduce response clutter
-    - just a 2 sentence recipe description and/or how it matches their preferences
-    - no intros such as "great!" or "thanks!"
-- load 3 recipes with a title, visual, and description. click brings to recipe page
 - responsive design, mobile first
 - perhaps tailscale or bootstrap for results animation
 - random cooking gifs as loading icons, swedish chef too
 - ai generated chef mascot
-- specific error if openai is out of monthly budget/no remaining SERP queries
+- free tool disclaimer stating possibility of no remaining SERP queries
