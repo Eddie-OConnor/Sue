@@ -21,9 +21,25 @@ async function formatRecipe(recipes) {
             messages: [
                 {
                     role: 'system',
-                    content: `You are an assistant that converts user messages into proper json 
-                    format. Each recipe should be its own object and each item within recipe (title, 
-                    rating, time, ingredients, thumbnail, and description) should be a parameter.
+                    content: `You are an assistant that converts user messages into an array. Each recipe 
+                    should be its own object and each item within recipe (title, rating, time, ingredients, 
+                    thumbnail, and description) should be a parameter. Below between the ### is an example
+                    of what to return.
+                    ###
+                    [
+                        {
+                            "title": "recipe example",
+                            "rating": "x ⭐ (y Reviews)",
+                            "time": "x hr",
+                            "ingredients": "ingredient examples",
+                            "thumbnail": "example_thumbnail.jpeg",
+                            "description": "example description"
+                        },
+                        {
+                            additional objects
+                        },
+                    ]
+                    ###
                     `
                 },
                 {

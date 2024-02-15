@@ -1,3 +1,5 @@
+import Recipe from "./recipeConstructor"
+
 const ingredients = 'ground beef and rice'
 const store = 'yes'
 const people = '2'
@@ -60,7 +62,7 @@ const recipeResponse = `
   
 
 
-async function getJsonRecipes(recipes){
+async function getRecipeArray(recipes){
     try {
         const response = await fetch('/.netlify/functions/formatRecipes', { 
             method: 'POST',
@@ -72,7 +74,7 @@ async function getJsonRecipes(recipes){
         if(response.ok){
             const data = await response.json()
             console.log(data)
-            // return data
+            return data.choices[0].message.content
         } 
     } catch (e) {
         console.error('error fetching recipes', e)
@@ -80,4 +82,24 @@ async function getJsonRecipes(recipes){
 }
 
 
-// const formattedRecipes = await getJsonRecipes(recipeResponse)
+// const recipeArray = await getRecipeArray(recipeResponse)
+
+async function renderRecipes(recipeArray){
+    const recipeResults = document.getElementById('recipe-results')
+    let recipeResultsHtml = ''
+    try {
+        if(recipeArray.length > 0){
+            recipeResultsHtml = recipeArray.map((recipe) => new Recipe(recipe).getRecipeHtml()).join('')
+        } else {
+            recipeResultsHtml = `
+            <p> Unable to load recipes. Please try another search.</p>
+            `
+        }
+        recipeResults.innerHTML = recipeResultsHtml
+
+    } catch (e) {
+        console.error('Error rendering recipe results', e)
+    }
+}
+
+// renderRecipes(recipeArray)
