@@ -4,15 +4,17 @@ class Recipe {
     }
 
     getRecipeHtml(){
-        const {title, rating, time, ingredients, thumbnail, description} = this
+        const {title, url, rating, time, ingredients, thumbnail, description} = this
         return `
-            <div>
-                <span>${title}</span>
-                <span>${rating}</span>
-                <span>${time}</span>
-                <span>${ingredients}</span>
-                <span>${thumbnail}</span>
-                <span>${description}</span>
+            <div class="recipe-container">
+                <a href="${url}"><img class="thumbnail" src="${thumbnail}" alt="recipe image thumbnail"></a>
+                <div class="recipe-details-container">
+                    <a href="${url}"><h3 class="recipe-title">${title}</h3></a>
+                    <span class="recipe-rating">${rating}</span>
+                    <span class="recipe-time">${time}</span>
+                    <span class="recipe-ingedients">${ingredients}</span>
+                    <p class="recipe-description">${description}</p>
+                </div>
             </div>
         `
     }

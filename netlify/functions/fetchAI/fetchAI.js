@@ -6,8 +6,8 @@ import { getJson } from 'serpapi'
 
 const handler = async (event) => {
     try {
-        const { one, two, three, four, five, six } = JSON.parse(event.body)
-        const run = await createAndRun(asstId, one, two, three, four, five, six)
+        const { ingredients, additionalIngredients, people, time, equipment, allergiesDislikes } = JSON.parse(event.body)
+        const run = await createAndRun(asstId, ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
         let currentRun = await retrieveRun(run.thread_id, run.id)
 
         while (currentRun.status !== 'completed') {
@@ -49,7 +49,7 @@ const handler = async (event) => {
 }
 
 
-async function createAndRun(assistant, one, two, three, four, five, six) {
+async function createAndRun(assistant, ingredients, additionalIngredients, people, time, equipment, allergiesDislikes) {
     try {
         const response = await openai.beta.threads.createAndRun(
             {
@@ -60,22 +60,22 @@ async function createAndRun(assistant, one, two, three, four, five, six) {
                             role: 'user',
                             content: `
                             Question: What ingredients do want to use?
-                            Answer: ${one}
+                            Answer: ${ingredients}
             
                             Question: Can you (or do you care to) shop for additional ingredients not mentioned above?
-                            Answer: ${two}
+                            Answer: ${additionalIngredients}
             
                             Question: How many people are you cooking for?
-                            Answer: ${three}
+                            Answer: ${people}
             
                             Question: How much time do you have?
-                            Answer: ${four}
+                            Answer: ${time}
             
                             Question: What sort of cooking equipment do you want to use?
-                            Answer: ${five}
+                            Answer: ${equipment}
             
                             Question: Allergies or dislikes that should be excluded from ingredients?
-                            Answer: ${six}
+                            Answer: ${allergiesDislikes}
                             `
                         }
                     ]

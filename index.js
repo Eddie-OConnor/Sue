@@ -1,20 +1,42 @@
 import Recipe from "./recipeConstructor"
+const submitBtn = document.getElementById('submit-btn')
+const ingredients = document.getElementById('ingredients')
+const additionalIngredientForm = document.getElementById('additional-ingredients-form')
+const people = document.getElementById('total-people')
+const time = document.getElementById('cooking-time')
+const equipment = document.getElementById('cooking-equipment')
+const allergicDislike = document.getElementById('allergies-dislikes')
 
-const ingredients = 'ground beef and rice'
-const store = 'yes'
-const people = '2'
-const time = '1 hours'
-const equipment = 'frying pan'
-const allergicDislike = 'none'
+// 'chicken and rice'
+// 'frying pan, pot, and oven'
 
-async function getRecipes(one, two, three, four, five, six){
+
+submitBtn.addEventListener('click', function(){
+    const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
+    const yes = allergicDislike.querySelector('input[type="text"]').value.trim() || ''
+    const no = allergicDislike.querySelector('input[type="radio"]:checked')
+    const allergicDislikeResult = no ? 'No' : yes
+
+    main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+})
+
+
+async function main(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
+    const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
+    const recipeResponseString = JSON.stringify(recipeResponse)
+    const recipeArray = await getRecipeArray(recipeResponseString)
+    renderRecipes(recipeArray)
+}
+
+
+async function getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
     try {
         const response = await fetch('/.netlify/functions/fetchAI', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({one, two, three, four, five, six})
+            body: JSON.stringify({ingredients, additionalIngredients, people, time, equipment, allergiesDislikes})
         })
         if(response.ok){
             const data = await response.json()
@@ -26,50 +48,15 @@ async function getRecipes(one, two, three, four, five, six){
     }
 }
 
-// getRecipes(ingredients, store, people, time, equipment, allergicDislike)
 
-const recipeResponse = `
-[
-    {
-      type: 'text',
-      text: {
-        value: 'Here are three recipes that match your criteria:\n' +
-          '\n' +
-          '[1. Ground Beef and Rice Skillet Recipe](https://cookthestory.com/ground-beef-and-rice-skillet/)\n' +
-          '- Rating: 5 ⭐ (25 Reviews)\n' +
-          '- Total Time: 1 hr 15 min\n' +
-          '- Main Ingredients: Ground beef, long grain rice, tomato paste, green bell pepper, Worcestershire sauce\n' +
-          '- Thumbnail: ![Thumbnail](https://serpapi.com/searches/65ce43984055aa524e032021/images/aaa2ab285819e711b0fdf43a21dbe9dddb130a2f087f8948c0897a49ac01c2ef.jpeg)\n' +
-          '- Description: A heartwarming skillet recipe that makes a meal of ground beef and rice brought together with the delightful flavors of tomato paste and green bell pepper.\n' +
-          '\n' +
-          '[2. Ground Beef and Rice Skillet Dinner](https://www.shakentogetherlife.com/ground-beef-and-rice-skillet-dinner/)\n' +
-          '- Rating: 4.8 ⭐ (50 Reviews)\n' +
-          '- Total Time: 30 min\n' +
-          '- Main Ingredients: Ground beef, beef broth, cheddar cheese, long grain rice, red bell pepper\n' +
-          '- Thumbnail: ![Thumbnail](https://serpapi.com/searches/65ce43984055aa524e032021/images/aaa2ab285819e711b0fdf43a21dbe9dd10e22063076ddf38a45b0f3dd5bfeaf1.jpeg)\n' +
-          '- Description: A quick, 30 minute skillet dinner featuring savory ground beef and rice, enhanced with a spicy touch of red bell pepper and cheddar cheese.\n' +
-          '\n' +
-          '[3. Beef and Rice with Veggies](https://www.recipetineats.com/ground-beef-and-rice-recipe/)\n' +
-          '- Rating: 4.9 ⭐ (93 Reviews)\n' +
-          '- Total Time: 25 min\n' +
-          '- Main Ingredients: Ground beef, grain white rice, beef broth, tomato paste, bell pepper\n' +
-          '- Thumbnail: ![Thumbnail](https://serpapi.com/searches/65ce43984055aa524e032021/images/aaa2ab285819e711b0fdf43a21dbe9ddf9b6b00821329d4cafc0ffeb88d76642.jpeg)\n' +
-          '- Description: This quick-fire recipe brings together ground beef, white rice, and vegetables in a symphony of taste that is ready in just 25 minutes.',
-        annotations: []
-      }
-    }
-  ]`
-  
-
-
-async function getRecipeArray(recipes){
+async function getRecipeArray(recipeString){
     try {
         const response = await fetch('/.netlify/functions/formatRecipes', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({recipes})
+            body: JSON.stringify({recipeString})
         })
         if(response.ok){
             const data = await response.json()
@@ -81,8 +68,6 @@ async function getRecipeArray(recipes){
     }
 }
 
-
-// const recipeArray = await getRecipeArray(recipeResponse)
 
 async function renderRecipes(recipeArray){
     const recipeResults = document.getElementById('recipe-results')
@@ -102,4 +87,76 @@ async function renderRecipes(recipeArray){
     }
 }
 
-// renderRecipes(recipeArray)
+
+
+
+
+
+// const recipeResponse =
+// [
+//     {
+//       type: 'text',
+//       text: {
+//         value: 'Here are three recipes that you can make using chicken and rice:\n' +
+//           '\n' +
+//           '1. One Pot Chicken and Rice:\n' +
+//           '   - Link: [One Pot Chicken and Rice](https://iowagirleats.com/one-pot-chicken-and-rice/)\n' +
+//           '   - Rating: 5 out of 5 stars\n' +
+//           '   - Reviews: 185\n' +
+//           '   - Total Time: Not specified\n' +
+//           '   - Ingredients: Jasmine rice, baby carrots, chicken breasts, butter, chicken stock\n' +
+//           '   - Description: This recipe combines chicken, rice, and vegetables in a delicious one-pot dish.\n' +
+//           '\n' +
+//           '2. One Pot Chicken and Rice:\n' +
+//           '   - Link: [One Pot Chicken and Rice](https://www.budgetbytes.com/one-pot-chicken-and-rice/)\n' +
+//           '   - Rating: 4.7 out of 5 stars\n' +
+//           '   - Reviews: 72\n' +
+//           '   - Total Time: 50 minutes\n' +
+//           '   - Ingredients: Skinless chicken thighs, grain white rice, vegetable broth, garlic powder, onion powder\n' +
+//           '   - Description: This budget-friendly recipe requires only one pot and is packed with flavor.\n' +
+//           '\n' +
+//           '3. Oven Baked Chicken and Rice:\n' +
+//           '   - Link: [Oven Baked Chicken and Rice](https://www.recipetineats.com/oven-baked-chicken-and-rice/)\n' +
+//           '   - Rating: 4.9 out of 5 stars\n' +
+//           '   - Reviews: 527\n' +
+//           '   - Total Time: 1 hour 20 minutes\n' +
+//           '   - Ingredients: Chicken thigh fillets, white rice, olive oil, hot, garlic powder\n' +
+//           '   - Description: This recipe creates tender and juicy chicken with perfectly cooked rice using the oven baking method.\n' +
+//           '\n' +
+//           'Enjoy your cooking!',
+//         annotations: []
+//       }
+//     }
+//   ]
+
+
+// const recipeArrayString = 
+// `[
+//     {
+//         "title": "One Pot Chicken and Rice",
+//         "url": "https://iowagirleats.com/one-pot-chicken-and-rice/",
+//         "rating": "5 ⭐ (185 Reviews)",
+//         "time": "Not specified",
+//         "ingredients": "Jasmine rice, baby carrots, chicken breasts, butter, chicken stock",
+//         "thumbnail": "",
+//         "description": "This recipe combines chicken, rice, and vegetables in a delicious one-pot dish."
+//     },
+//     {
+//         "title": "One Pot Chicken and Rice",
+//         "url": "https://www.budgetbytes.com/one-pot-chicken-and-rice/",
+//         "rating": "4.7 ⭐ (72 Reviews)",
+//         "time": "50 minutes",
+//         "ingredients": "Skinless chicken thighs, grain white rice, vegetable broth, garlic powder, onion powder",
+//         "thumbnail": "",
+//         "description": "This budget-friendly recipe requires only one pot and is packed with flavor."
+//     },
+//     {
+//         "title": "Oven Baked Chicken and Rice",
+//         "url": "https://www.recipetineats.com/oven-baked-chicken-and-rice/",
+//         "rating": "4.9 ⭐ (527 Reviews)",
+//         "time": "1 hour 20 minutes",
+//         "ingredients": "Chicken thigh fillets, white rice, olive oil, hot, garlic powder",
+//         "thumbnail": "",
+//         "description": "This recipe creates tender and juicy chicken with perfectly cooked rice using the oven baking method."
+//     }
+// ]`

@@ -15,8 +15,44 @@
     </header>
 
     <main>
-        <div id="recipe-results">
+        <h3 class="question">What ingredients do want to use?</h3>
+        <input type="text" placeholder="chicken" id="ingredients">
 
+        <h3 class="question">Can you (or do you care to) shop for additional ingredients not mentioned above?</h3>
+        <form id="additional-ingredients-form">
+            <label>Yes<input type="radio" name="additional-ingredients" value="Yes"></label>
+            <label>No<input type="radio" name="additional-ingredients" value="No"></label>
+        </form>
+
+        <h3 class="question">How many people are you cooking for?(Limit 12)</h3>
+        <input type="number" id="total-people" placeholder="2" min="1" max="12">
+
+        <label for="cooking-time"><h3 class="question">How much time do you have?</h3></label>
+        <select id="cooking-time">
+            <option> - </option>
+            <option>Less than 1 hour</option>
+            <option>1 hour</option>
+            <option>2 hours</option>
+            <option>3 hours</option>
+            <option>4 hours</option>
+            <option>5+ hours</option>
+        </select>
+
+        <h3 class="question">What sort of cooking equipment do you want to use?</h3>
+        <input type="text" placeholder="oven, frying pan, grill" id="cooking-equipment">
+
+        <h3 class="question">Allergies or dislikes that should be excluded from ingredients?</h3>
+        <form id="allergies-dislikes">
+            <label>Yes<input type="text" placeholder="peanuts" name="allergies-dislikes"></label>
+            <label>No<input type="radio" name="allergies-dislikes" value="No"></label>
+        </form>
+
+
+        <button id="submit-btn" type="submit">Submit</button>
+        <div id="recipe-results" class="hidden">
+
+            <!-- recipes load here -->
+            
         </div>
     </main>
 

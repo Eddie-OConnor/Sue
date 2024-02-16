@@ -2,8 +2,8 @@ import { openai } from '../../../config/openai.config'
 
 const handler = async (event) => {
     try {
-        const { recipes } = JSON.parse(event.body)
-        const jsonRecipes = await formatRecipe(recipes)
+        const { recipeString } = JSON.parse(event.body)
+        const jsonRecipes = await formatRecipe(recipeString)
         return {
             statusCode: 200,
             body: JSON.stringify({ jsonRecipes }),
@@ -15,20 +15,21 @@ const handler = async (event) => {
 }
 
 
-async function formatRecipe(recipes) {
+async function formatRecipe(recipeString) {
     try {
         const response = await openai.chat.completions.create({
             messages: [
                 {
                     role: 'system',
                     content: `You are an assistant that converts user messages into an array. Each recipe 
-                    should be its own object and each item within recipe (title, rating, time, ingredients, 
+                    should be its own object and each item within recipe (title, url, rating, time, ingredients, 
                     thumbnail, and description) should be a parameter. Below between the ### is an example
                     of what to return.
                     ###
                     [
                         {
                             "title": "recipe example",
+                            "url": "example_url.com",
                             "rating": "x ⭐ (y Reviews)",
                             "time": "x hr",
                             "ingredients": "ingredient examples",
@@ -44,7 +45,7 @@ async function formatRecipe(recipes) {
                 },
                 {
                     role: 'user',
-                    content:`${recipes}`
+                    content:`${recipeString}`
                 }
             ],
             model: 'gpt-3.5-turbo-0125'
