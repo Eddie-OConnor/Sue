@@ -40,8 +40,8 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         })
         if(response.ok){
             const data = await response.json()
-            console.log(data)
-            // return data
+            console.log(data[0].content[0].text.value)
+            return data[0].content[0].text.value
         } 
     } catch (e) {
         console.error('error fetching recipes', e)
@@ -70,6 +70,7 @@ async function getRecipeArray(recipeString){
 
 
 async function renderRecipes(recipeArray){
+    const formContainer = document.getElementById('form-container')
     const recipeResults = document.getElementById('recipe-results')
     let recipeResultsHtml = ''
     try {
@@ -81,7 +82,8 @@ async function renderRecipes(recipeArray){
             `
         }
         recipeResults.innerHTML = recipeResultsHtml
-
+        formContainer.classList.toggle('hidden')
+        recipeResults.classList.toggle('hidden')
     } catch (e) {
         console.error('Error rendering recipe results', e)
     }
