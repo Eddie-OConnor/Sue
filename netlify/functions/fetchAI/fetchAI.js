@@ -37,7 +37,7 @@ const handler = async (event) => {
             }
         }
         const { data } = await listMessages(run.thread_id)
-        console.log(data[0].content)
+        console.log(data)
         return {
             statusCode: 200,
             body: JSON.stringify({ data }),
@@ -59,23 +59,12 @@ async function createAndRun(assistant, ingredients, additionalIngredients, peopl
                         {
                             role: 'user',
                             content: `
-                            Question: What ingredients do want to use?
-                            Answer: ${ingredients}
-            
-                            Question: Can you (or do you care to) shop for additional ingredients not mentioned above?
-                            Answer: ${additionalIngredients}
-            
-                            Question: How many people are you cooking for?
-                            Answer: ${people}
-            
-                            Question: How much time do you have?
-                            Answer: ${time}
-            
-                            Question: What sort of cooking equipment do you want to use?
-                            Answer: ${equipment}
-            
-                            Question: Allergies or dislikes that should be excluded from ingredients?
-                            Answer: ${allergiesDislikes}
+                            1) ${ingredients}
+                            2) ${additionalIngredients}
+                            3) ${people}
+                            4) ${time}
+                            5) ${equipment}
+                            6) ${allergiesDislikes}
                             `
                         }
                     ]

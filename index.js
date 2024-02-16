@@ -7,9 +7,6 @@ const time = document.getElementById('cooking-time')
 const equipment = document.getElementById('cooking-equipment')
 const allergicDislike = document.getElementById('allergies-dislikes')
 
-// 'chicken and rice'
-// 'frying pan, pot, and oven'
-
 
 submitBtn.addEventListener('click', function(){
     const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
@@ -40,8 +37,9 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         })
         if(response.ok){
             const data = await response.json()
-            console.log(data[0].content[0].text.value)
-            return data[0].content[0].text.value
+            console.log(data)
+            console.log(data.data)
+            return data.data[0].content[0].text.value
         } 
     } catch (e) {
         console.error('error fetching recipes', e)
