@@ -2,8 +2,85 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    background-color: #f2ffff;
+
+}
+
+main{
+    max-width: 380px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.question{
+    margin: 30px 0 15px 0;
+    font-size: 22px;
+    text-align: left;
+}
+
+span{
+    font-size: 12px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+input[type='text']{
+    width: 80%;
+    height: 40px;
+    border: solid 2px black;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #f2ffff;
+    font-size: 18px;
+}
+
+input[name='allergies-dislikes']{
+    width: 25%;
+    height: 30px;
+}
+
+label{
+    font-size: 18px;
+    font-weight: normal;
+    padding: 10px;
+}
+
+#total-people, #cooking-time{
+    height: 30px;
+    border: solid 2px black;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #f2ffff;
+    font-size: 18px;
+}
+
+#submit-btn{
+    width: 80%;
+    height: 40px;
+    border: solid 4px black;
+    border-radius: 20px;
+    margin: 40px 0 0 0;
+    background-color: #4BDCB0;
+}
+
+#submit-btn:hover{
+    cursor: pointer;
+}
+
+#submit-btn:disabled{
+    cursor:not-allowed;
 }
 
 .hidden{
     display: none;
+}
+
+footer{
+    font-size: 10px;
+    margin: 20px auto 15px auto;
+    font-style: italic;
+    font-weight: normal;
+    text-align: center;
 }

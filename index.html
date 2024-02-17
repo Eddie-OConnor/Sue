@@ -15,6 +15,7 @@
     </header>
 
     <main>
+        
         <div id="form-container">
             <h3 class="question">What ingredients do want to use?</h3>
             <input type="text" placeholder="chicken" id="ingredients">
@@ -25,8 +26,8 @@
                 <label>No<input type="radio" name="additional-ingredients" value="No"></label>
             </form>
 
-            <h3 class="question">How many people are you cooking for?(Limit 12)</h3>
-            <input type="number" id="total-people" placeholder="2" min="1" max="12">
+            <h3 class="question">How many people?</h3>
+            <input type="number" id="total-people" placeholder="2" min="1" max="12"><span> Limit 12</span>
 
             <label for="cooking-time"><h3 class="question">How much time do you have?</h3></label>
             <select id="cooking-time">
@@ -44,22 +45,26 @@
 
             <h3 class="question">Allergies or dislikes that should be excluded from ingredients?</h3>
             <form id="allergies-dislikes">
-                <label>Yes<input type="text" placeholder="peanuts" name="allergies-dislikes"></label>
-                <label>No<input type="radio" name="allergies-dislikes" value="No"></label>
+                <label>Yes <input type="text" placeholder="peanuts" name="allergies-dislikes"></label>
+                <label>No<input type="radio" value="No"></label>
             </form>
 
             <button id="submit-btn" type="submit">Submit</button>
         </div>
+
         <div id="recipe-results" class="hidden">
 
             <!-- recipes load here -->
             
         </div>
+
+        <footer>
+            <span>This app is utilizing free third party tools that have monthly limits and may not be as fast as what you 
+                are used to. We appreciate you testing! Please reach out to support (Ed) if you encounter errors.</span>
+        </footer>
+
     </main>
 
     <script src="index.js" type="module"></script>
     </body>
-
-    <footer>
-    </footer>
 </html>
