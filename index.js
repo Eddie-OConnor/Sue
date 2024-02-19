@@ -24,9 +24,11 @@ submitBtn.addEventListener('click', function(){
 async function main(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
     const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
     console.log(recipeResponse)
-    const recipeResponseString = JSON.stringify(recipeResponse)
-    console.log(recipeResponseString)
-    const recipeArray = await getRecipeArray(recipeResponseString)
+    // const recipeResponseString = JSON.stringify(recipeResponse)
+    // console.log(recipeResponseString)
+    const formattedRecipes = await getformattedRecipes(recipeResponse)
+    console.log(formattedRecipes)
+    const recipeArray = JSON.parse(formattedRecipes)
     console.log(recipeArray)
     renderRecipes(recipeArray)
 }
@@ -52,19 +54,19 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
 }
 
 
-async function getRecipeArray(recipeString){
+async function getformattedRecipes(recipeResponse){
     try {
         const response = await fetch('/.netlify/functions/formatRecipes', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({recipeString})
+            body: JSON.stringify({recipeResponse})
         })
         if(response.ok){
             const data = await response.json()
             console.log(data)
-            return data.choices[0].message.content
+            return data.jsonRecipes.choices[0].message.content
         } 
     } catch (e) {
         console.error('error fetching recipes', e)
