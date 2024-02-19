@@ -4,9 +4,9 @@
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- <link rel="icon" href="" type="image/x-icon" /> -->
         <link rel="stylesheet" href="index.css">
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap&family=Lobster:wght@400;700&display=swap');
-        </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lobster&display=swap" rel="stylesheet">
         <title>Sue</title>
     </head>
     <body>
@@ -16,56 +16,67 @@
     </header>
 
     <main>
-        <div class="question-container">
-            <h3 class="question">What ingredients do want to use?</h3>
-            <input type="text" placeholder="chicken, rice, beans" maxlength="36" id="ingredients">
+        <div id="form-container" class="hidden">
+            <div class="question-container">
+                <h3 class="question">What ingredients do want to use?</h3>
+                <input type="text" placeholder="chicken, rice, beans" maxlength="36" id="ingredients">
+            </div>
+
+            <div class="question-container">
+                <h3 class="question">Can you (or do you care to) shop for ingredients not mentioned above?</h3>
+                <form id="additional-ingredients-form">
+                    <label>Yes<input type="radio" name="additional-ingredients" value="Yes"></label>
+                    <label>No<input type="radio" name="additional-ingredients" value="No"></label>
+                </form>
+            </div>
+
+            <div class="question-container">
+                <h3 class="question">How many people?</h3>
+                <input type="number" id="total-people" placeholder="2" min="1" max="12"><span>Limit 12</span>
+            </div>
+
+            <div class="question-container">
+                <label for="cooking-time"><h3 class="question">How much time do you have?</h3></label>
+                <select id="cooking-time">
+                    <option> - </option>
+                    <option>Less than 1 hour</option>
+                    <option>1 hour</option>
+                    <option>2 hours</option>
+                    <option>3 hours</option>
+                    <option>4 hours</option>
+                    <option>5+ hours</option>
+                </select>
+            </div>
+
+            <div class="question-container">
+                <h3 class="question">What sort of cooking equipment do you want to use?</h3>
+                <input type="text" placeholder="oven, frying pan, grill" maxlength="36" id="cooking-equipment">
+            </div>
+
+            <div class="question-container">
+                <h3 class="question">Allergies or dislikes that should be excluded from ingredients?</h3>
+                <form id="allergies-dislikes">
+                    <label>Yes<input type="radio" value="Yes" id="yes-radio-allergy-dislike"></label>
+                    <label>No<input type="radio" value="No" id="no-radio-allergy-dislike"></label>
+                    <input type="text" placeholder="peanuts, gluten" maxlength="36" name="allergies-dislikes" class="hidden" id="allergy-dislike-input">
+                </form>
+            </div>
         </div>
+        <button id="submit-btn" type="submit" class="hidden">Submit</button>
 
-        <div class="question-container">
-            <h3 class="question">Can you (or do you care to) shop for ingredients not mentioned above?</h3>
-            <form id="additional-ingredients-form">
-                <label>Yes<input type="radio" name="additional-ingredients" value="Yes"></label>
-                <label>No<input type="radio" name="additional-ingredients" value="No"></label>
-            </form>
-        </div>
-
-        <div class="question-container">
-            <h3 class="question">How many people?</h3>
-            <input type="number" id="total-people" placeholder="2" min="1" max="12"><span>Limit 12</span>
-        </div>
-
-        <div class="question-container">
-            <label for="cooking-time"><h3 class="question">How much time do you have?</h3></label>
-            <select id="cooking-time">
-                <option> - </option>
-                <option>Less than 1 hour</option>
-                <option>1 hour</option>
-                <option>2 hours</option>
-                <option>3 hours</option>
-                <option>4 hours</option>
-                <option>5+ hours</option>
-            </select>
-        </div>
-
-        <div class="question-container">
-            <h3 class="question">What sort of cooking equipment do you want to use?</h3>
-            <input type="text" placeholder="oven, frying pan, grill" maxlength="36" id="cooking-equipment">
-        </div>
-
-        <div class="question-container">
-            <h3 class="question">Allergies or dislikes that should be excluded from ingredients?</h3>
-            <form id="allergies-dislikes">
-                <label>Yes<input type="radio" value="Yes" id="yes-radio-allergy-dislike"></label>
-                <label>No<input type="radio" value="No" id="no-radio-allergy-dislike"></label>
-                <input type="text" placeholder="peanuts, gluten" maxlength="36" name="allergies-dislikes" class="hidden" id="allergy-dislike-input">
-            </form>
-        </div>
-
-        <button id="submit-btn" type="submit">Submit</button>
-
-        <div id="recipe-results" class="hidden">
+        <div id="recipe-results">
 
             <!-- recipes load here -->
+            <a href="https://www.thechunkychef.com/honey-garlic-glazed-salmon">
+                <div class="recipe-container">
+                    <img class="thumbnail" src="./assets/utensils.png" alt="recipe image thumbnail">
+                    <h3 class="recipe-title">Garlic Butter Salmon</h3>
+                    <p class="recipe-rating">5</p>
+                    <p class="recipe-time">13 min</p>
+                    <p class="recipe-ingredients">Salmon fillets,olive oil,lemon juice,garlic,salted butter</p>
+                    <p class="recipe-description">A delicious salmon dish cooked with garlic and butter for a flavorful meal.</p>
+                </div>
+            </a>
             
         </div>
     </main>

@@ -47,7 +47,7 @@ main{
     text-align: left;
 }
 
-span{
+.question-container span{
     font-size: 12px;
     font-weight: normal;
     font-style: italic;
@@ -119,3 +119,51 @@ footer{
     font-weight: normal;
     text-align: left;
 }
+
+.recipe-container{
+    margin: 25px auto;
+    width: 80%;
+    border: dashed 1px black;
+    padding: 15px;
+    font-weight: normal;
+    text-align: left;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+.recipe-container:hover{
+    cursor: pointer;
+    box-shadow: 10px 10px rgba(0, 0, 0, 0.5);
+    transform: scale(1.02);
+}
+
+.thumbnail{
+    height: 100px;
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+.recipe-title{
+    font-size: 22px;
+    margin: 8px 0;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.recipe-rating, .recipe-time, .recipe-ingredients, .recipe-description{
+    font-size: 16px;
+    margin: 8px 0;
+    font-weight: 500;
+}
+
+.recipe-ingredients, .recipe-description{
+    font-weight:300;
+    font-size: 14px;
+}
+
+
