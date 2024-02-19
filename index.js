@@ -16,14 +16,18 @@ submitBtn.addEventListener('click', function(){
     const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
     const allergicDislikeResult = no ? 'No' : yes
 
+    console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
     main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
 })
 
 
 async function main(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
     const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
+    console.log(recipeResponse)
     const recipeResponseString = JSON.stringify(recipeResponse)
+    console.log(recipeResponseString)
     const recipeArray = await getRecipeArray(recipeResponseString)
+    console.log(recipeArray)
     renderRecipes(recipeArray)
 }
 
@@ -40,7 +44,6 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         if(response.ok){
             const data = await response.json()
             console.log(data)
-            console.log(data.data)
             return data.data[0].content[0].text.value
         } 
     } catch (e) {
