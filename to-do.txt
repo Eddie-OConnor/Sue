@@ -1,5 +1,3 @@
+- not getting thumbnail url, no spaces in ingredients
 - responsive design, mobile first
-- perhaps tailscale or bootstrap for results animation
-- random cooking gifs as loading icons, swedish chef too
 - ai generated chef mascot
-- free tool disclaimer stating possibility of no remaining SERP queries
