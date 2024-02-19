@@ -140,6 +140,7 @@ footer{
 .thumbnail{
     height: 100px;
     width: 80%;
+    object-fit: cover;
     display: block;
     margin: 0 auto;
 }
@@ -150,9 +151,11 @@ a{
 }
 .recipe-title{
     font-size: 22px;
-    margin: 8px 0;
+    margin: 12px 0;
     font-weight: 600;
     text-decoration: none;
+    color: #2878f9;
+    text-shadow: 2px 1px 1px rgba(0, 0, 0, .1);
 }
 
 .recipe-rating, .recipe-time, .recipe-ingredients, .recipe-description{
