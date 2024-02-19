@@ -24,12 +24,16 @@ submitBtn.addEventListener('click', function(){
 async function main(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
     const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
     console.log(recipeResponse)
-    // const recipeResponseString = JSON.stringify(recipeResponse)
-    // console.log(recipeResponseString)
-    const formattedRecipes = await getformattedRecipes(recipeResponse)
+
+    const recipeResponseString = JSON.stringify(recipeResponse)
+    console.log(recipeResponseString)
+
+    const formattedRecipes = await getformattedRecipes(recipeResponseString)
     console.log(formattedRecipes)
+
     const recipeArray = JSON.parse(formattedRecipes)
     console.log(recipeArray)
+
     renderRecipes(recipeArray)
 }
 
@@ -45,7 +49,6 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         })
         if(response.ok){
             const data = await response.json()
-            console.log(data)
             return data.data[0].content[0].text.value
         } 
     } catch (e) {
@@ -65,7 +68,6 @@ async function getformattedRecipes(recipeResponse){
         })
         if(response.ok){
             const data = await response.json()
-            console.log(data)
             return data.jsonRecipes.choices[0].message.content
         } 
     } catch (e) {
