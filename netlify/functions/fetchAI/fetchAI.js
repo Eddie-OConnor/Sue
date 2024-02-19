@@ -37,7 +37,7 @@ const handler = async (event) => {
             }
         }
         const { data } = await listMessages(run.thread_id)
-        console.log(data)
+        console.log(data[0].content)
         return {
             statusCode: 200,
             body: JSON.stringify({ data }),

@@ -81,6 +81,7 @@ async function renderRecipes(recipeArray){
             <p> Unable to load recipes. Please try another search.</p>
             `
         }
+        console.log(recipeResultsHtml)
         recipeResults.innerHTML = recipeResultsHtml
         formContainer.classList.toggle('hidden')
         recipeResults.classList.toggle('hidden')
