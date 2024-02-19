@@ -1,3 +1,5 @@
+import { allergyDislikeChange } from "./uxFunctions"
+
 import Recipe from "./recipeConstructor"
 const submitBtn = document.getElementById('submit-btn')
 const ingredients = document.getElementById('ingredients')
@@ -10,8 +12,8 @@ const allergicDislike = document.getElementById('allergies-dislikes')
 
 submitBtn.addEventListener('click', function(){
     const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
-    const yes = allergicDislike.querySelector('input[type="text"]').value.trim() || ''
-    const no = allergicDislike.querySelector('input[type="radio"]:checked')
+    const yes = allergicDislike.querySelector('input[id="allergy-dislike-input"]').value.trim() || ''
+    const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
     const allergicDislikeResult = no ? 'No' : yes
 
     main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
@@ -88,7 +90,9 @@ async function renderRecipes(recipeArray){
 }
 
 
+/* UX Functions */
 
+allergicDislike.addEventListener('change', allergyDislikeChange)
 
 
 
