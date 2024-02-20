@@ -1,6 +1,6 @@
 import { allergyDislikeChange } from "./uxFunctions"
-
 import Recipe from "./recipeConstructor"
+
 const submitBtn = document.getElementById('submit-btn')
 const ingredients = document.getElementById('ingredients')
 const additionalIngredientForm = document.getElementById('additional-ingredients-form')
@@ -31,7 +31,7 @@ async function main(ingredients, additionalIngredients, people, time, equipment,
     const formattedRecipes = await getformattedRecipes(recipeResponseString)
     console.log(formattedRecipes)
 
-    const recipeArray = JSON.parse(formattedRecipes)
+    const recipeArray = JSON.parse(formattedRecipes.choices[0].message.content)
     console.log(recipeArray)
 
     renderRecipes(recipeArray)
@@ -57,14 +57,14 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
 }
 
 
-async function getformattedRecipes(recipeResponse){
+async function getformattedRecipes(recipeResponseString){
     try {
         const response = await fetch('/.netlify/functions/formatRecipes', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({recipeResponse})
+            body: JSON.stringify({recipeResponseString})
         })
         if(response.ok){
             const data = await response.json()
@@ -91,7 +91,6 @@ async function renderRecipes(recipeArray){
         console.log(recipeResultsHtml)
         recipeResults.innerHTML = recipeResultsHtml
         formContainer.classList.toggle('hidden')
-        recipeResults.classList.toggle('hidden')
     } catch (e) {
         console.error('Error rendering recipe results', e)
     }
@@ -101,74 +100,3 @@ async function renderRecipes(recipeArray){
 /* UX Functions */
 
 allergicDislike.addEventListener('change', allergyDislikeChange)
-
-
-
-// const recipeResponse =
-// [
-//     {
-//       type: 'text',
-//       text: {
-//         value: 'Here are three recipes that you can make using chicken and rice:\n' +
-//           '\n' +
-//           '1. One Pot Chicken and Rice:\n' +
-//           '   - Link: [One Pot Chicken and Rice](https://iowagirleats.com/one-pot-chicken-and-rice/)\n' +
-//           '   - Rating: 5 out of 5 stars\n' +
-//           '   - Reviews: 185\n' +
-//           '   - Total Time: Not specified\n' +
-//           '   - Ingredients: Jasmine rice, baby carrots, chicken breasts, butter, chicken stock\n' +
-//           '   - Description: This recipe combines chicken, rice, and vegetables in a delicious one-pot dish.\n' +
-//           '\n' +
-//           '2. One Pot Chicken and Rice:\n' +
-//           '   - Link: [One Pot Chicken and Rice](https://www.budgetbytes.com/one-pot-chicken-and-rice/)\n' +
-//           '   - Rating: 4.7 out of 5 stars\n' +
-//           '   - Reviews: 72\n' +
-//           '   - Total Time: 50 minutes\n' +
-//           '   - Ingredients: Skinless chicken thighs, grain white rice, vegetable broth, garlic powder, onion powder\n' +
-//           '   - Description: This budget-friendly recipe requires only one pot and is packed with flavor.\n' +
-//           '\n' +
-//           '3. Oven Baked Chicken and Rice:\n' +
-//           '   - Link: [Oven Baked Chicken and Rice](https://www.recipetineats.com/oven-baked-chicken-and-rice/)\n' +
-//           '   - Rating: 4.9 out of 5 stars\n' +
-//           '   - Reviews: 527\n' +
-//           '   - Total Time: 1 hour 20 minutes\n' +
-//           '   - Ingredients: Chicken thigh fillets, white rice, olive oil, hot, garlic powder\n' +
-//           '   - Description: This recipe creates tender and juicy chicken with perfectly cooked rice using the oven baking method.\n' +
-//           '\n' +
-//           'Enjoy your cooking!',
-//         annotations: []
-//       }
-//     }
-//   ]
-
-
-// const recipeArrayString = 
-// `[
-//     {
-//         "title": "One Pot Chicken and Rice",
-//         "url": "https://iowagirleats.com/one-pot-chicken-and-rice/",
-//         "rating": "5 ⭐ (185 Reviews)",
-//         "time": "Not specified",
-//         "ingredients": "Jasmine rice, baby carrots, chicken breasts, butter, chicken stock",
-//         "thumbnail": "",
-//         "description": "This recipe combines chicken, rice, and vegetables in a delicious one-pot dish."
-//     },
-//     {
-//         "title": "One Pot Chicken and Rice",
-//         "url": "https://www.budgetbytes.com/one-pot-chicken-and-rice/",
-//         "rating": "4.7 ⭐ (72 Reviews)",
-//         "time": "50 minutes",
-//         "ingredients": "Skinless chicken thighs, grain white rice, vegetable broth, garlic powder, onion powder",
-//         "thumbnail": "",
-//         "description": "This budget-friendly recipe requires only one pot and is packed with flavor."
-//     },
-//     {
-//         "title": "Oven Baked Chicken and Rice",
-//         "url": "https://www.recipetineats.com/oven-baked-chicken-and-rice/",
-//         "rating": "4.9 ⭐ (527 Reviews)",
-//         "time": "1 hour 20 minutes",
-//         "ingredients": "Chicken thigh fillets, white rice, olive oil, hot, garlic powder",
-//         "thumbnail": "",
-//         "description": "This recipe creates tender and juicy chicken with perfectly cooked rice using the oven baking method."
-//     }
-// ]`
