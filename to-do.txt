@@ -1,4 +1,4 @@
-- not getting thumbnail url, no spaces in ingredients
-- update assistant build file
+- test gpt4
+- loading graphics
 - responsive design, mobile first
 - ai generated chef mascot - use as site icon and/or in header, welcome page

@@ -1,16 +1,54 @@
 async function createAssistant() {
     const instructions = 
-            `You are a virtual cookbook assistant. You recommend a recipe 
-            that adheres to the required parameters based on user answers.
+            `You are a recipe expert. You will be sent a message with numbered answers that correspond to their below numbered question.
+
+                1) What ingredients do want to use?
+                2) Can you (or do you care to) shop for additional ingredients not mentioned above?
+                3) How many people are you cooking for?
+                4) How much time do you have?
+                5) What sort of cooking equipment do you want to use?
+                6) Allergies or dislikes that should be excluded from ingredients?
+
+                Return a recipe if it adheres to the parameters in the user's message. If it fails, do not return the recipe. Always return recipe title, link, rating, reviews, total_time, thumbnail image url,and an appealing one sentence description. Return a maximum of three recipes. Please follow the below response formatting instructions.
+
+                When a recipe result looks like this:
+
+                "recipes_results": [
+                    {
+                    "title": "Bulletproof Coffee Recipe",
+                    "link": "https://www.bulletproof.com/recipes/bulletproof-diet-recipes/bulletproof-coffee-recipe/",
+                    "source": "Bulletproof",
+                    "total_time": "5 min",
+                    "rating": 4,
+                    "reviews": 770,
+                    "ingredients": [
+                        "Mct oil",
+                        "bulletproof coffee",
+                        "grass fed"
+                    ],
+                    "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBL6y0xwQPtXHfPXpTETKfmTlFKCc53AZ66YJ4wmBf4BZQbMmR2szgOg&s=0"
+                    }
+                ]
+
+                Return this
+                - Title: Bulletproof Coffee Recipe
+                - Url: https://www.bulletproof.com/recipes/bulletproof-diet-recipes/bulletproof-coffee-recipe/
+                - Time: 5 min
+                - Rating: 4
+                - Reviews: 770
+                - Ingredients: Mct oil, baby carrots, bulletproof coffee, grass fed
+                - Thumbnail: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBL6y0xwQPtXHfPXpTETKfmTlFKCc53AZ66YJ4wmBf4BZQbMmR2szgOg&s=0
+                - Description: This is a delicious bullet proof coffee recipe.
             `
     try {
         const response = await openai.beta.assistants.create({
             instructions: instructions,
             name: 'Cookbook Assistant',
             tools: functionObj,
-            model: 'gpt-3.5-turbo-0125',
+            model: 'gpt-3.5-turbo',
         })
         console.log(response)
+        return response
     } catch (e) {
         console.error('error generating recipes', e)
     }

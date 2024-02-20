@@ -12,7 +12,7 @@ class Recipe {
                     <h3 class="recipe-title">${title}</h3>
                     <p class="recipe-rating">${rating}</p>
                     <p class="recipe-time">${time}</p>
-                    <p class="recipe-ingedients">${ingredients}</p>
+                    <p class="recipe-ingredients">${ingredients}</p>
                     <p class="recipe-description">${description}</p>
                 </div>
             </a>
