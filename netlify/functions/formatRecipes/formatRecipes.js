@@ -30,27 +30,27 @@ async function formatRecipe(recipes) {
                         {
                             "title": "title",
                             "url": "url",
-                            "rating": rating,
+                            "rating": "X ⭐ (Y Reviews)",
                             "time": "time",
-                            "ingredients": ["ingredient1, ingredient2, ingredient3"],
+                            "ingredients": "ingredient1, ingredient2, ingredient3",
                             "thumbnail": "thumbnail.jpeg",
                             "description": "description"
                         },
                         {
                             "title": "title",
                             "url": "url",
-                            "rating": rating,
+                            "rating": "X ⭐ (Y Reviews)",
                             "time": "time",
-                            "ingredients": ["ingredient1, ingredient2, ingredient3"],
+                            "ingredients": "ingredient1, ingredient2, ingredient3",
                             "thumbnail": "thumbnail.jpeg",
                             "description": "description"
                         },
                         {
                             "title": "title",
                             "url": "url",
-                            "rating": rating,
+                            "rating": "X ⭐ (Y Reviews)",
                             "time": "time",
-                            "ingredients": ["ingredient1, ingredient2, ingredient3"],
+                            "ingredients": "ingredient1, ingredient2, ingredient3",
                             "thumbnail": "thumbnail.jpeg",
                             "description": "description"
                         },

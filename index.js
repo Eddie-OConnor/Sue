@@ -31,7 +31,7 @@ async function main(ingredients, additionalIngredients, people, time, equipment,
     const formattedRecipes = await getformattedRecipes(recipeResponseString)
     console.log(formattedRecipes)
 
-    const recipeArray = JSON.parse(formattedRecipes.choices[0].message.content)
+    const recipeArray = JSON.parse(formattedRecipes)
     console.log(recipeArray)
 
     renderRecipes(recipeArray)
