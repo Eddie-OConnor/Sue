@@ -17,7 +17,7 @@ submitBtn.addEventListener('click', function(){
     const allergicDislikeResult = no ? 'No' : yes
 
     console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
-    main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+    // main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
 })
 
 
