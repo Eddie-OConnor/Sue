@@ -1,3 +1,3 @@
-- ai generated chef mascot - use as site icon and header
 - responsive design - adjust for desktop w media queries
+- test functionality with max 12 searches (would have 30 remaining for the month after release)
 - test gpt4 - tool response errors?
