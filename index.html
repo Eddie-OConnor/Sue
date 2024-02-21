@@ -19,18 +19,18 @@
 
     <main>
 
-        <div id="form-container">
+        <div id="form-container" class="hidden">
 
             <div class="question-container">
                 <h3 class="question">What ingredients do want to use?</h3>
-                <input type="text" placeholder="chicken, rice, beans" maxlength="36" id="ingredients">
+                <input type="text" placeholder="chicken, rice, beans" maxlength="36" id="ingredients"><span class="desktop-span hidden">Limit 36 characters</span>
             </div>
 
             <div class="question-container">
                 <h3 class="question">Can you (or do you care to) shop for ingredients not mentioned above?</h3>
-                <form id="additional-ingredients-form">
-                    <label>Yes<input type="radio" name="additional-ingredients" value="Yes"></label>
-                    <label>No<input type="radio" name="additional-ingredients" value="No"></label>
+                <form id="additional-ingredients-form" class="vertical-radio">
+                    <label><input type="radio" name="additional-ingredients" value="Yes">Yes</label>
+                    <label><input type="radio" name="additional-ingredients" value="No">No</label>
                 </form>
             </div>
 
@@ -54,14 +54,14 @@
 
             <div class="question-container">
                 <h3 class="question">What sort of cooking equipment do you want to use?</h3>
-                <input type="text" placeholder="oven, frying pan, grill" maxlength="36" id="cooking-equipment">
+                <input type="text" placeholder="oven, frying pan, grill" maxlength="36" id="cooking-equipment"><span class="desktop-span hidden">Limit 36 characters</span>
             </div>
 
             <div class="question-container">
                 <h3 class="question">Allergies or dislikes that should be excluded from ingredients?</h3>
-                <form id="allergies-dislikes">
-                    <label>Yes<input type="radio" value="Yes" id="yes-radio-allergy-dislike"></label>
-                    <label>No<input type="radio" value="No" id="no-radio-allergy-dislike"></label>
+                <form id="allergies-dislikes" class="vertical-radio">
+                    <label><input type="radio" value="Yes" id="yes-radio-allergy-dislike">Yes</label>
+                    <label><input type="radio" value="No" id="no-radio-allergy-dislike">No</label>
                     <input type="text" placeholder="peanuts, gluten" maxlength="36" name="allergies-dislikes" class="hidden" id="allergy-dislike-input">
                 </form>
             </div>
@@ -74,9 +74,45 @@
 
         <div id="recipe-results">
             <!-- recipes load here -->
+            <a href="https://www.lecremedelacrumb.com/best-easy-healthy-baked-salmon/">
+                <div class="recipe-container">
+                    <img class="thumbnail" src="https://serpapi.com/searches/65d4c841ca968f4eb2f65ea9/images/c1228fb970225efb289569b9ded583ebd646aa625b25ef9abb3491098dafd549.jpeg" alt="recipe image thumbnail">
+                    <h3 class="recipe-title">Best Easy Healthy Baked Salmon</h3>
+                    <p class="recipe-rating">5 ⭐ (2100 Reviews)</p>
+                    <p class="recipe-time">25 min</p>
+                    <p class="recipe-ingedients">Herbs de provence, lemon, salmon fillets, olive oil, black pepper</p>
+                    <p class="recipe-description">This easy and healthy baked salmon is seasoned with herbs and lemon for a flavorful dish.</p>
+                </div>
+            </a>
+        
+            <a href="https://www.recipetineats.com/garlic-butter-salmon-recipe/">
+                <div class="recipe-container">
+                    <img class="thumbnail" src="https://serpapi.com/searches/65d4c841ca968f4eb2f65ea9/images/c1228fb970225efb289569b9ded583eb76048e578b6bc2f135267bf1d5ded3ae.jpeg" alt="recipe image thumbnail">
+                    <h3 class="recipe-title">Garlic Butter Salmon recipe</h3>
+                    <p class="recipe-rating">5 ⭐ (38 Reviews)</p>
+                    <p class="recipe-time">13 min</p>
+                    <p class="recipe-ingedients">Salmon fillets, olive oil, lemon juice, garlic, salted butter</p>
+                    <p class="recipe-description">Delicious and quick, this garlic butter salmon recipe is a perfect dish for a flavorful meal.</p>
+                </div>
+            </a>
+
+            <a href="https://www.lecremedelacrumb.com/best-easy-healthy-baked-salmon/">
+                <div class="recipe-container">
+                    <img class="thumbnail" src="https://serpapi.com/searches/65d4c841ca968f4eb2f65ea9/images/c1228fb970225efb289569b9ded583ebd646aa625b25ef9abb3491098dafd549.jpeg" alt="recipe image thumbnail">
+                    <h3 class="recipe-title">Best Easy Healthy Baked Salmon</h3>
+                    <p class="recipe-rating">5 ⭐ (2100 Reviews)</p>
+                    <p class="recipe-time">25 min</p>
+                    <p class="recipe-ingedients">Herbs de provence, lemon, salmon fillets, olive oil, black pepper</p>
+                    <p class="recipe-description">This easy and healthy baked salmon is seasoned with herbs and lemon for a flavorful dish.</p>
+                </div>
+            </a>
+        
+
         </div>
 
-        <button id="main-btn" type="submit">Submit</button>
+        <div class="center">
+            <button id="main-btn" type="submit">Submit</button>
+        </div>
         
     </main>
 

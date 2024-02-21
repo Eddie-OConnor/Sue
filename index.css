@@ -63,7 +63,7 @@ header p{
 main{
     max-width: 350px;
     margin: 25px auto 0 auto;
-    text-align: center;
+    text-align: left;
 }
 
 .question-container{
@@ -242,3 +242,96 @@ a{
 .hidden{
     display: none;
 }
+
+.vertical-radio{
+    display: flex;
+    flex-direction: column;
+}
+
+.vertical-radio input[type='radio']{
+    margin-right: 8px;
+}
+
+/* Media Query for non mobile */
+
+@media (min-width: 451px){
+    header{
+        height: 237px;
+        width: 100%;
+        margin: 0;
+        position: relative;
+        margin-bottom: 50px;
+    }
+    
+    header::before{
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: url('assets/wide-kitchen.jpg') bottom;
+        background-size: cover;
+        filter: brightness(0.7);
+    }
+    
+    header h1{
+        font-size: 120px;
+        top: 12%;
+        left: 40%;
+    }
+    
+    header p{
+        font-size: 20px;
+        bottom: 20%;
+        left: 40%;
+        text-shadow: 1px 1px 1px rgb(0, 0, 0);
+    }
+    
+    #sue-mascot{
+        bottom: 5%;
+        left: 30%;
+    }
+
+    main{
+        max-width: 800px;
+        margin: 25px auto 0 auto;
+    }
+
+    .desktop-span {
+        display: inline;
+    }
+
+    #cooking-time{
+        width: 30%;
+    }
+
+    #main-btn{
+        width: 80%;
+    }
+
+    .center{
+        text-align: center;
+    }
+
+    .question-container{
+        margin: 35px 0 45px 0;
+        border-bottom: dashed 1px black;
+        padding-bottom: 45px;
+    }
+
+    .question{
+        margin-bottom: 30px;
+    }
+
+
+    #recipe-results{
+        display: flex;
+    }
+
+    footer{
+        font-size: 14px;
+        width: 800px;
+        margin: 60px auto;
+    }
+} 

@@ -10,6 +10,8 @@ const equipment = document.getElementById('cooking-equipment')
 const allergicDislike = document.getElementById('allergies-dislikes')
 let action = 'submit'
 
+// add disable button and prevent default logic
+
 mainBtn.addEventListener('click', function(){
     if(action === 'submit'){
         const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
