@@ -89,7 +89,7 @@ label{
     height: 35px;
 }
 
-#submit-btn{
+#main-btn{
     width: 100%;
     height: 60px;
     border: solid 4px black;
@@ -100,16 +100,12 @@ label{
     font-weight: bold;
 }
 
-#submit-btn:hover{
+#main-btn:hover{
     cursor: pointer;
 }
 
-#submit-btn:disabled{
+#main-btn:disabled{
     cursor:not-allowed;
-}
-
-.hidden{
-    display: none;
 }
 
 footer{
@@ -181,11 +177,15 @@ a{
     width: 35%;
 }
 
+#sandwich{
+    margin-right: 20px;
+}
+
 .loading-text{
     font-size: 18px;
     font-style: italic;
     font-weight: 400;
-    margin: 0;
+    margin: 8px 0 0 0;
 }
 
 #loading-wheel {
@@ -207,4 +207,8 @@ a{
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.hidden{
+    display: none;
 }

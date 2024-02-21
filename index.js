@@ -1,30 +1,39 @@
-import { allergyDislikeChange } from "./uxFunctions"
+import { allergyDislikeChange, loading, stopLoading } from "./uxFunctions"
 import Recipe from "./recipeConstructor"
 
-const submitBtn = document.getElementById('submit-btn')
+const mainBtn = document.getElementById('main-btn')
 const ingredients = document.getElementById('ingredients')
 const additionalIngredientForm = document.getElementById('additional-ingredients-form')
 const people = document.getElementById('total-people')
 const time = document.getElementById('cooking-time')
 const equipment = document.getElementById('cooking-equipment')
 const allergicDislike = document.getElementById('allergies-dislikes')
+let action = 'submit'
 
-
-submitBtn.addEventListener('click', function(){
-    const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
-    const yes = allergicDislike.querySelector('input[id="allergy-dislike-input"]').value.trim() || ''
-    const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
-    const allergicDislikeResult = no ? 'No' : yes
-
-    console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
-    // main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+mainBtn.addEventListener('click', function(){
+    if(action === 'submit'){
+        const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
+        const yes = allergicDislike.querySelector('input[id="allergy-dislike-input"]').value.trim() || ''
+        const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
+        const allergicDislikeResult = no ? 'No' : yes
+    
+        console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+        // main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+        mainBtn.innerText = 'Reset'
+        action = 'reset'
+    } else {
+        location.reload()
+    }
+    
 })
 
 
 async function main(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
+    loading('loadingGetRecipes')
     const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
     console.log(recipeResponse)
 
+    loading('loadingGetFormattedRecipes')
     const recipeResponseString = JSON.stringify(recipeResponse)
     console.log(recipeResponseString)
 
@@ -34,6 +43,7 @@ async function main(ingredients, additionalIngredients, people, time, equipment,
     const recipeArray = JSON.parse(formattedRecipes)
     console.log(recipeArray)
 
+    stopLoading()
     renderRecipes(recipeArray)
 }
 
