@@ -1,4 +1,3 @@
-- test gpt4
-- loading graphics
-- responsive design, mobile first
-- ai generated chef mascot - use as site icon and/or in header, welcome page
+- ai generated chef mascot - use as site icon and header
+- responsive design - adjust for desktop w media queries
+- test gpt4 - tool response errors?
