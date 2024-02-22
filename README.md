@@ -15,6 +15,7 @@
 2. Connect repo to Netlify
 3. Install dependencies: `npm install`
 4. Add `OPENAI_API_KEY`and `SERP_API_KEY` as environment variables:
+5. Create assistant by referencing assistant-build.txt
 
 ## Usage
 1. Complete form of questions
