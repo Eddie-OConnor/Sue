@@ -9,6 +9,7 @@
 - SERP API
 - Frontend: Vite
 - Backend: Netlify
+- Cloudinary CDN
 
 ## Installation Instructions
 1. Clone the repository
