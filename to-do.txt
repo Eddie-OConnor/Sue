@@ -1,5 +1,2 @@
-- add disable button and prevent default logic
-- general error message assuming serp api is out of queries
-
 - test functionality with max 12 searches (would have 30 remaining for the month after release)
 - test gpt4 - tool response errors?
