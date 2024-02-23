@@ -48,11 +48,11 @@ async function main(ingredients, additionalIngredients, people, time, equipment,
         stopLoading()
         renderRecipes(recipeArray)
     } catch (e) {
-        console.error('error running main function', e)
         stopLoading()
         mainBtn.innerText = 'Reset'
         action = 'reset'
         errorMessage(formContainer)
+        console.error('error running main function', e)
     }
 }
 
@@ -71,11 +71,11 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
             return data.data[0].content[0].text.value
         } 
     } catch (e) {
-        console.error('error fetching recipes', e)
         stopLoading()
         mainBtn.innerText = 'Reset'
         action = 'reset'
         errorMessage(formContainer)
+        console.error('error fetching recipes', e)
     }
 }
 
@@ -94,11 +94,11 @@ async function getformattedRecipes(recipeResponseString){
             return data.jsonRecipes.choices[0].message.content
         } 
     } catch (e) {
-        console.error('error fetching recipes', e)
         stopLoading()
         mainBtn.innerText = 'Reset'
         action = 'reset'
         errorMessage(formContainer)
+        console.error('error formatting recipes', e)
     }
 }
 
@@ -110,9 +110,6 @@ async function renderRecipes(recipeArray){
         if(recipeArray.length > 0){
             recipeResultsHtml = recipeArray.map((recipe) => new Recipe(recipe).getRecipeHtml()).join('')
         } else {
-            // recipeResultsHtml = `
-            // <p> Unable to load recipes. Please try another search.</p>
-            // `
             stopLoading()
             mainBtn.innerText = 'Reset'
             action = 'reset'
