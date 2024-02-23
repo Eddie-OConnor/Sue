@@ -26,6 +26,7 @@ mainBtn.addEventListener('click', function () {
             location.reload()
         }
     } catch (e){
+        console.error('error running main function', e)
         mainBtn.innerText = 'Reset'
         action = 'reset'
         errorMessage(formContainer)
