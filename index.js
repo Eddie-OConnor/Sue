@@ -35,6 +35,7 @@ mainBtn.addEventListener('click', function () {
 
 
 async function main(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
+    formContainer.classList.toggle('hidden')
     loading('loadingGetRecipes')
     const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
     console.log(recipeResponse)

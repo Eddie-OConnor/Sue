@@ -14,7 +14,6 @@ export function allergyDislikeChange(event){
 const loadingContainer = document.getElementById('loading-graphic-container')
 
 export function loading(graphic){
-    formContainer.classList.toggle('hidden')
     loadingContainer.style.display = 'flex'
     if(graphic === 'loadingGetRecipes'){
         loadingContainer.innerHTML = `
