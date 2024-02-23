@@ -43,8 +43,8 @@ export function enableMainBtn(mainBtn, ingredients, additionalIngredientForm, pe
     mainBtn.disabled = !(ingredients && additionalIngredients && people && time && equipment && allergicDislikeCheck)
 }
 
-export function errorMessage(){
-    const formContainer = document.getElementById('form-container')
+
+export function errorMessage(formContainer){
     formContainer.innerHTML = `
         <p class="error-msg">Unforseen error. Please refresh and try again. If the error persists, we have likely hit monthly limits on our free 
         third party tools. Please reach out to Ed and test again next month when our limits reset. Thanks!</p>

@@ -1,6 +1,7 @@
 import {allergyDislikeChange, loading, stopLoading, enableMainBtn, errorMessage } from "./uxFunctions"
 import Recipe from "./recipeConstructor"
 
+const formContainer = document.getElementById('form-container')
 const mainBtn = document.getElementById('main-btn')
 const ingredients = document.getElementById('ingredients')
 const additionalIngredientForm = document.getElementById('additional-ingredients-form')
@@ -28,7 +29,7 @@ mainBtn.addEventListener('click', function () {
     } catch (e){
         mainBtn.innerText = 'Reset'
         action = 'reset'
-        errorMessage()
+        errorMessage(formContainer)
     }
 })
 
@@ -92,7 +93,6 @@ async function getformattedRecipes(recipeResponseString){
 
 
 async function renderRecipes(recipeArray){
-    const formContainer = document.getElementById('form-container')
     const recipeResults = document.getElementById('recipe-results')
     let recipeResultsHtml = ''
     try {
