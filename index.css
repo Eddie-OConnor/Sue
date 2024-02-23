@@ -132,6 +132,9 @@ label{
 
 #main-btn:disabled{
     cursor:not-allowed;
+    background-color: lightgray;
+    color: rgb(120, 120, 120);
+    font-style: italic;
 }
 
 footer{
@@ -246,6 +249,10 @@ a{
 
 .vertical-radio input[type='radio']{
     margin-right: 8px;
+}
+
+.error-msg{
+    text-align: center;
 }
 
 /* Media Query for non mobile */

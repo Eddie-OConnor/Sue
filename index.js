@@ -1,4 +1,4 @@
-import { allergyDislikeChange, loading, stopLoading } from "./uxFunctions"
+import {allergyDislikeChange, loading, stopLoading, enableMainBtn, errorMessage } from "./uxFunctions"
 import Recipe from "./recipeConstructor"
 
 const mainBtn = document.getElementById('main-btn')
@@ -10,21 +10,26 @@ const equipment = document.getElementById('cooking-equipment')
 const allergicDislike = document.getElementById('allergies-dislikes')
 let action = 'submit'
 
-mainBtn.addEventListener('click', function(){
-    if(action === 'submit'){
-        const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
-        const yes = allergicDislike.querySelector('input[id="allergy-dislike-input"]').value.trim() || ''
-        const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
-        const allergicDislikeResult = no ? 'No' : yes
+mainBtn.addEventListener('click', function () {
+    try {
+        if (action === 'submit') {
+            action = 'reset'
+            const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
+            const yes = allergicDislike.querySelector('input[id="allergy-dislike-input"]').value.trim() || ''
+            const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
+            const allergicDislikeResult = no ? 'No' : yes
     
-        console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
-        // main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+            main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+            console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+            mainBtn.innerText = 'Reset'
+        } else {
+            location.reload()
+        }
+    } catch (e){
         mainBtn.innerText = 'Reset'
         action = 'reset'
-    } else {
-        location.reload()
+        errorMessage()
     }
-    
 })
 
 
@@ -108,5 +113,24 @@ async function renderRecipes(recipeArray){
 
 
 /* UX Functions */
+
+ingredients.addEventListener('change', () => {
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+})
+additionalIngredientForm.addEventListener('change', () => {
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+})
+people.addEventListener('change', () => {
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+})
+time.addEventListener('change', () => {
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+})
+equipment.addEventListener('change', () => {
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+})
+allergicDislike.addEventListener('change', () => {
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+})
 
 allergicDislike.addEventListener('change', allergyDislikeChange)
