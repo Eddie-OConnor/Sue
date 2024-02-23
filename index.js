@@ -21,7 +21,6 @@ mainBtn.addEventListener('click', function () {
             const allergicDislikeResult = no ? 'No' : yes
     
             main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
-            console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
             mainBtn.innerText = 'Reset'
         } else {
             location.reload()
@@ -106,7 +105,6 @@ async function renderRecipes(recipeArray){
         }
         console.log(recipeResultsHtml)
         recipeResults.innerHTML = recipeResultsHtml
-        formContainer.classList.toggle('hidden')
     } catch (e) {
         console.error('Error rendering recipe results', e)
     }
