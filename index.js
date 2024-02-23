@@ -12,46 +12,47 @@ const allergicDislike = document.getElementById('allergies-dislikes')
 let action = 'submit'
 
 mainBtn.addEventListener('click', function () {
-    try {
-        if (action === 'submit') {
-            action = 'reset'
-            const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
-            const yes = allergicDislike.querySelector('input[id="allergy-dislike-input"]').value.trim() || ''
-            const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
-            const allergicDislikeResult = no ? 'No' : yes
-    
-            main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
-            mainBtn.innerText = 'Reset'
-        } else {
-            location.reload()
-        }
-    } catch (e){
-        console.error('error running main function', e)
-        mainBtn.innerText = 'Reset'
+    if (action === 'submit') {
         action = 'reset'
-        errorMessage(formContainer)
+        const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
+        const yes = allergicDislike.querySelector('input[id="allergy-dislike-input"]').value.trim() || ''
+        const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
+        const allergicDislikeResult = no ? 'No' : yes
+
+        main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+        mainBtn.innerText = 'Reset'
+    } else {
+        location.reload()
     }
 })
 
 
 async function main(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
-    formContainer.classList.toggle('hidden')
-    loading('loadingGetRecipes')
-    const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
-    console.log(recipeResponse)
-
-    loading('loadingGetFormattedRecipes')
-    const recipeResponseString = JSON.stringify(recipeResponse)
-    console.log(recipeResponseString)
-
-    const formattedRecipes = await getformattedRecipes(recipeResponseString)
-    console.log(formattedRecipes)
-
-    const recipeArray = JSON.parse(formattedRecipes)
-    console.log(recipeArray)
-
-    stopLoading()
-    renderRecipes(recipeArray)
+    try {
+        formContainer.classList.toggle('hidden')
+        loading('loadingGetRecipes')
+        const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
+        console.log(recipeResponse)
+    
+        loading('loadingGetFormattedRecipes')
+        const recipeResponseString = JSON.stringify(recipeResponse)
+        console.log(recipeResponseString)
+    
+        const formattedRecipes = await getformattedRecipes(recipeResponseString)
+        console.log(formattedRecipes)
+    
+        const recipeArray = JSON.parse(formattedRecipes)
+        console.log(recipeArray)
+    
+        stopLoading()
+        renderRecipes(recipeArray)
+    } catch (e) {
+        console.error('error running main function', e)
+        stopLoading()
+        mainBtn.innerText = 'Reset'
+        action = 'reset'
+        errorMessage(formContainer)
+    }
 }
 
 
