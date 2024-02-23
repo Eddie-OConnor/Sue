@@ -1,2 +1,4 @@
 - test functionality with max 12 searches (would have 30 remaining for the month after release)
 - test gpt4 - tool response errors?
+
+- remove allergy dislike to publish and do further testing
