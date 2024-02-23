@@ -101,9 +101,10 @@ async function renderRecipes(recipeArray){
         if(recipeArray.length > 0){
             recipeResultsHtml = recipeArray.map((recipe) => new Recipe(recipe).getRecipeHtml()).join('')
         } else {
-            recipeResultsHtml = `
-            <p> Unable to load recipes. Please try another search.</p>
-            `
+            // recipeResultsHtml = `
+            // <p> Unable to load recipes. Please try another search.</p>
+            // `
+            errorMessage(formContainer)
         }
         console.log(recipeResultsHtml)
         recipeResults.innerHTML = recipeResultsHtml
