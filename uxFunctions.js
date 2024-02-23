@@ -17,12 +17,12 @@ export function loading(graphic){
     loadingContainer.style.display = 'flex'
     if(graphic === 'loadingGetRecipes'){
         loadingContainer.innerHTML = `
-        <img class="loading-icon" src="./assets/magnifyingbook.gif" alt="recipe search gif">
+        <img class="loading-icon" src="https://res.cloudinary.com/dexjsh4sa/image/upload/v1708718441/magnifyingbook_i0wwm9.gif" alt="recipe search gif">
         <p class="loading-text">Searching for recipes...<div id="loading-wheel"></div></p>
         `
     } else {
         loadingContainer.innerHTML = `
-        <img class="loading-icon" id="sandwich" src="./assets/sandwich.gif" alt="recipe load gif">
+        <img class="loading-icon" id="sandwich" src="https://res.cloudinary.com/dexjsh4sa/image/upload/v1708718441/sandwich_w9wh0e.gif" alt="recipe load gif">
         <p class="loading-text">Loading recipes...<div id="loading-wheel"></div></p>
         `
     }
