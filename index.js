@@ -18,8 +18,9 @@ mainBtn.addEventListener('click', function () {
         const yes = allergicDislike.querySelector('input[id="allergy-dislike-input"]').value.trim() || ''
         const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
         const allergicDislikeResult = no ? 'No' : yes
+        console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
 
-        main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+        // main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
         mainBtn.innerText = 'Reset'
     } else {
         location.reload()
@@ -71,6 +72,10 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         } 
     } catch (e) {
         console.error('error fetching recipes', e)
+        stopLoading()
+        mainBtn.innerText = 'Reset'
+        action = 'reset'
+        errorMessage(formContainer)
     }
 }
 
@@ -90,6 +95,10 @@ async function getformattedRecipes(recipeResponseString){
         } 
     } catch (e) {
         console.error('error fetching recipes', e)
+        stopLoading()
+        mainBtn.innerText = 'Reset'
+        action = 'reset'
+        errorMessage(formContainer)
     }
 }
 
@@ -104,6 +113,9 @@ async function renderRecipes(recipeArray){
             // recipeResultsHtml = `
             // <p> Unable to load recipes. Please try another search.</p>
             // `
+            stopLoading()
+            mainBtn.innerText = 'Reset'
+            action = 'reset'
             errorMessage(formContainer)
         }
         console.log(recipeResultsHtml)

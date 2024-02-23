@@ -90,6 +90,10 @@ input[type='text']{
     font-size: 18px;
 }
 
+#cooking-equipment{
+    width: 50%;
+}
+
 input[name='allergies-dislikes']{
     width: 80%;
     height: 30px;
@@ -149,7 +153,7 @@ footer{
     margin: 35px auto;
     width: 80%;
     border: dashed 1px black;
-    padding: 15px;
+    padding: 25px;
     font-weight: normal;
     text-align: left;
     box-shadow: 5px 5px rgba(0, 0, 0, 0.5);

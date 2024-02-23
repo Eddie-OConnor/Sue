@@ -31,7 +31,6 @@ export function loading(graphic){
 
 export function stopLoading(){
     loadingContainer.style.display = 'none'
-    console.log('loading stopped')
 }
 
 
