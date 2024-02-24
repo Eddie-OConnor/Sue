@@ -25,7 +25,7 @@
 4. Reset button to submit a new request
 
 ## Future Improvements
-We will add in an allergies and dislikes question for Sue to process in order to avoid recommending recipes that a user cannot eat or will not like. This was included in the initial build; however, the assistant could not handle the complexity. This feature can be added in when assistant is more advanced and out of beta or when GPT model improvements are released.
+We will add in an allergies and dislikes question for Sue to process in order to avoid recommending recipes that a user cannot eat or will not like. This was included in the initial build; however, the assistant could not handle the complexity. This feature can be added in when OpenAI Assistant is more advanced and out of beta or when GPT model improvements are released.
 
 ## Contributing
 Contributions are welcome! Please follow these guidelines:
@@ -45,5 +45,5 @@ Contributions are welcome! Please follow these guidelines:
 This project is open source. [License details](LICENSE)
 
 ## Contact Information
-- LinkedIn: [Edward James O'Connor](https://www.linkedin.com/in/edwardjamesoconnor/)
-- GitHub: [Your GitHub Profile](https://github.com/Eddie-OConnor)
+- LinkedIn: [Eddie O'Connor](https://www.linkedin.com/in/edwardjamesoconnor/)
+- GitHub: [GitHub Profile](https://github.com/Eddie-OConnor)
