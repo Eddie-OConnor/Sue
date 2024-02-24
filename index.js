@@ -14,7 +14,6 @@ mainBtn.addEventListener('click', function () {
     if (action === 'submit') {
         action = 'reset'
         const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
-        console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
 
         main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
         mainBtn.innerText = 'Reset'
@@ -29,24 +28,14 @@ async function main(ingredients, additionalIngredients, people, time, equipment)
         formContainer.classList.toggle('hidden')
         loading('loadingGetRecipes')
         const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment)
-        console.log(recipeResponse)
-    
         loading('loadingGetFormattedRecipes')
         const recipeResponseString = JSON.stringify(recipeResponse)
-        console.log(recipeResponseString)
-    
         const formattedRecipes = await getformattedRecipes(recipeResponseString)
-        console.log(formattedRecipes)
-    
         const recipeArray = JSON.parse(formattedRecipes)
-        console.log(recipeArray)
-    
         stopLoading()
         renderRecipes(recipeArray)
     } catch (e) {
         stopLoading()
-        // errorMessage(formContainer, mainBtn, e)
-        // console.error('Error running main function.', e)
         throw e
     }
 }
@@ -107,7 +96,6 @@ async function renderRecipes(recipeArray){
         } else {
             throw new Error('Error loading recipes.')
         }
-        console.log(recipeResultsHtml)
         recipeResults.innerHTML = recipeResultsHtml
     } catch (e) {
         stopLoading()
