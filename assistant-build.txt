@@ -7,9 +7,8 @@ async function createAssistant() {
                 3) How many people are you cooking for?
                 4) How much time do you have?
                 5) What sort of cooking equipment do you want to use?
-                6) Allergies or dislikes that should be excluded from ingredients?
 
-                Return a recipe if it adheres to the parameters in the user's message. If it fails, do not return the recipe. Always return recipe title, link, rating, reviews, total_time, thumbnail image url,and an appealing one sentence description. Return a maximum of three recipes. Please follow the below response formatting instructions.
+                Do not google more than once. Return a recipe if it adheres to the parameters in the user's message. If it fails, do not return the recipe. Always return recipe title, link, rating, reviews, total_time, thumbnail image url,and an appealing one sentence description. Return a maximum of three recipes. Please follow the below response formatting instructions.
 
                 When a recipe result looks like this:
 
@@ -45,7 +44,7 @@ async function createAssistant() {
             instructions: instructions,
             name: 'Cookbook Assistant',
             tools: functionObj,
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-4',
         })
         console.log(response)
         return response
