@@ -1,4 +1,4 @@
-import {allergyDislikeChange, loading, stopLoading, enableMainBtn, errorMessage } from "./uxFunctions"
+import { loading, stopLoading, enableMainBtn, errorMessage } from "./uxFunctions"
 import Recipe from "./recipeConstructor"
 
 const formContainer = document.getElementById('form-container')
@@ -8,19 +8,15 @@ const additionalIngredientForm = document.getElementById('additional-ingredients
 const people = document.getElementById('total-people')
 const time = document.getElementById('cooking-time')
 const equipment = document.getElementById('cooking-equipment')
-const allergicDislike = document.getElementById('allergies-dislikes')
 let action = 'submit'
 
 mainBtn.addEventListener('click', function () {
     if (action === 'submit') {
         action = 'reset'
         const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
-        const yes = allergicDislike.querySelector('input[id="allergy-dislike-input"]').value.trim() || ''
-        const no = allergicDislike.querySelector('input[id="no-radio-allergy-dislike"]:checked')
-        const allergicDislikeResult = no ? 'No' : yes
-        console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+        console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
 
-        main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value, allergicDislikeResult)
+        main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
         mainBtn.innerText = 'Reset'
     } else {
         location.reload()
@@ -28,11 +24,11 @@ mainBtn.addEventListener('click', function () {
 })
 
 
-async function main(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
+async function main(ingredients, additionalIngredients, people, time, equipment){
     try {
         formContainer.classList.toggle('hidden')
         loading('loadingGetRecipes')
-        const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
+        const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment)
         console.log(recipeResponse)
     
         loading('loadingGetFormattedRecipes')
@@ -57,14 +53,14 @@ async function main(ingredients, additionalIngredients, people, time, equipment,
 }
 
 
-async function getRecipes(ingredients, additionalIngredients, people, time, equipment, allergiesDislikes){
+async function getRecipes(ingredients, additionalIngredients, people, time, equipment){
     try {
         const response = await fetch('/.netlify/functions/fetchAI', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ingredients, additionalIngredients, people, time, equipment, allergiesDislikes})
+            body: JSON.stringify({ingredients, additionalIngredients, people, time, equipment})
         })
         if(response.ok){
             const data = await response.json()
@@ -126,22 +122,17 @@ async function renderRecipes(recipeArray){
 /* UX Functions */
 
 ingredients.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
 })
 additionalIngredientForm.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
 })
 people.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
 })
 time.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
 })
 equipment.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
+    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
 })
-allergicDislike.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value, allergicDislike)
-})
-
-allergicDislike.addEventListener('change', allergyDislikeChange)

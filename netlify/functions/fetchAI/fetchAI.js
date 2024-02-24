@@ -6,8 +6,8 @@ import { getJson } from 'serpapi'
 
 const handler = async (event) => {
     try {
-        const { ingredients, additionalIngredients, people, time, equipment, allergiesDislikes } = JSON.parse(event.body)
-        const run = await createAndRun(asstId, ingredients, additionalIngredients, people, time, equipment, allergiesDislikes)
+        const { ingredients, additionalIngredients, people, time, equipment } = JSON.parse(event.body)
+        const run = await createAndRun(asstId, ingredients, additionalIngredients, people, time, equipment)
         let currentRun = await retrieveRun(run.thread_id, run.id)
 
         while (currentRun.status !== 'completed') {
@@ -49,7 +49,7 @@ const handler = async (event) => {
 }
 
 
-async function createAndRun(assistant, ingredients, additionalIngredients, people, time, equipment, allergiesDislikes) {
+async function createAndRun(assistant, ingredients, additionalIngredients, people, time, equipment) {
     try {
         const response = await openai.beta.threads.createAndRun(
             {
@@ -64,7 +64,6 @@ async function createAndRun(assistant, ingredients, additionalIngredients, peopl
                             3) ${people}
                             4) ${time}
                             5) ${equipment}
-                            6) ${allergiesDislikes}
                             `
                         }
                     ]
