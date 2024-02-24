@@ -28,9 +28,14 @@ export function enableMainBtn(mainBtn, ingredients, additionalIngredientForm, pe
 }
 
 
-export function errorMessage(formContainer){
+export function errorMessage(formContainer, mainBtn, e){
     formContainer.innerHTML = `
-        <p class="error-msg">Unforseen error. Please refresh and try again. If the error persists, we have likely hit monthly limits on our free 
-        third party tools. Please reach out to Ed and test again next month when our limits reset. Thanks!</p>
+        <p class="error-msg">Oops! An unexpected error occurred 🤕. Please refresh and try again.</p>
+
+        <p class="error-msg">If the error reads 'Error fetching recipes', it might be due to reaching monthly limits on our free third-party tools. These limits reset at the beginning 
+        of each month. Feel free to reach out to Ed for more information or try again next month. Thank you for your understanding!</p>
+
+        <p class="error-msg">Error Message: ${e}</p>
         `
+    mainBtn.style.display = 'none'
 }

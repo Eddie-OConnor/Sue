@@ -246,7 +246,8 @@ a{
 }
 
 .error-msg{
-    text-align: center;
+    text-align: left;
+    font-weight: normal;
 }
 
 /* Media Query for non mobile */

@@ -11,7 +11,7 @@ const handler = async (event) => {
         let currentRun = await retrieveRun(run.thread_id, run.id)
 
         while (currentRun.status !== 'completed') {
-            await new Promise(resolve => setTimeout(resolve, 1000))
+            await new Promise(resolve => setTimeout(resolve, 1500))
             console.log(currentRun.status)
             currentRun = await retrieveRun(run.thread_id, run.id)
 

@@ -16,14 +16,16 @@ mainBtn.addEventListener('click', function () {
         const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
         console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
 
-        console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
-
-        // main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
+        main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
         mainBtn.innerText = 'Reset'
     } else {
         location.reload()
     }
 })
+
+// const e = 'error fetching recipes'
+
+// errorMessage(formContainer, mainBtn, e)
 
 
 async function main(ingredients, additionalIngredients, people, time, equipment){
@@ -47,10 +49,10 @@ async function main(ingredients, additionalIngredients, people, time, equipment)
         renderRecipes(recipeArray)
     } catch (e) {
         stopLoading()
-        mainBtn.innerText = 'Reset'
-        action = 'reset'
-        errorMessage(formContainer)
-        console.error('error running main function', e)
+        formContainer.classList.toggle('hidden')
+        // errorMessage(formContainer, mainBtn, e)
+        // console.error('Error running main function.', e)
+        throw e
     }
 }
 
@@ -67,13 +69,13 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         if(response.ok){
             const data = await response.json()
             return data.data[0].content[0].text.value
-        } 
+        } else {
+            throw new Error('Error fetching recipes.')
+        }
     } catch (e) {
         stopLoading()
-        mainBtn.innerText = 'Reset'
-        action = 'reset'
-        errorMessage(formContainer)
-        console.error('error fetching recipes', e)
+        errorMessage(formContainer, mainBtn, e.message)
+        console.error('Error fetching recipes.', e)
     }
 }
 
@@ -90,13 +92,13 @@ async function getformattedRecipes(recipeResponseString){
         if(response.ok){
             const data = await response.json()
             return data.jsonRecipes.choices[0].message.content
-        } 
+        } else {
+            throw new Error('Error formatting recipes.')
+        }
     } catch (e) {
         stopLoading()
-        mainBtn.innerText = 'Reset'
-        action = 'reset'
-        errorMessage(formContainer)
-        console.error('error formatting recipes', e)
+        errorMessage(formContainer, mainBtn, e.message)
+        console.error('Error formatting recipes.', e)
     }
 }
 
@@ -108,33 +110,20 @@ async function renderRecipes(recipeArray){
         if(recipeArray.length > 0){
             recipeResultsHtml = recipeArray.map((recipe) => new Recipe(recipe).getRecipeHtml()).join('')
         } else {
-            stopLoading()
-            mainBtn.innerText = 'Reset'
-            action = 'reset'
-            errorMessage(formContainer)
+            throw new Error('Error loading recipes.')
         }
         console.log(recipeResultsHtml)
         recipeResults.innerHTML = recipeResultsHtml
     } catch (e) {
-        console.error('Error rendering recipe results', e)
+        stopLoading()
+        errorMessage(formContainer, mainBtn, e.message)
+        console.error('Error loading recipes.', e)
     }
 }
 
 
 /* UX Functions */
 
-ingredients.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
-})
-additionalIngredientForm.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
-})
-people.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
-})
-time.addEventListener('change', () => {
-    enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
-})
-equipment.addEventListener('change', () => {
+formContainer.addEventListener('change', () => {
     enableMainBtn(mainBtn, ingredients.value, additionalIngredientForm, people.value, time.value, equipment.value)
 })
