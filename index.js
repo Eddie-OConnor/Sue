@@ -23,10 +23,6 @@ mainBtn.addEventListener('click', function () {
     }
 })
 
-// const e = 'error fetching recipes'
-
-// errorMessage(formContainer, mainBtn, e)
-
 
 async function main(ingredients, additionalIngredients, people, time, equipment){
     try {
@@ -49,7 +45,6 @@ async function main(ingredients, additionalIngredients, people, time, equipment)
         renderRecipes(recipeArray)
     } catch (e) {
         stopLoading()
-        formContainer.classList.toggle('hidden')
         // errorMessage(formContainer, mainBtn, e)
         // console.error('Error running main function.', e)
         throw e
@@ -74,7 +69,7 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         }
     } catch (e) {
         stopLoading()
-        errorMessage(formContainer, mainBtn, e.message)
+        errorMessage(mainBtn, e.message)
         console.error('Error fetching recipes.', e)
     }
 }
@@ -97,7 +92,7 @@ async function getformattedRecipes(recipeResponseString){
         }
     } catch (e) {
         stopLoading()
-        errorMessage(formContainer, mainBtn, e.message)
+        errorMessage(mainBtn, e.message)
         console.error('Error formatting recipes.', e)
     }
 }
@@ -116,7 +111,7 @@ async function renderRecipes(recipeArray){
         recipeResults.innerHTML = recipeResultsHtml
     } catch (e) {
         stopLoading()
-        errorMessage(formContainer, mainBtn, e.message)
+        errorMessage(mainBtn, e.message)
         console.error('Error loading recipes.', e)
     }
 }

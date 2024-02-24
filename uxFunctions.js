@@ -28,8 +28,9 @@ export function enableMainBtn(mainBtn, ingredients, additionalIngredientForm, pe
 }
 
 
-export function errorMessage(formContainer, mainBtn, e){
-    formContainer.innerHTML = `
+export function errorMessage(mainBtn, e){
+    const errorContainer = document.getElementById('error-container')
+    errorContainer.innerHTML = `
         <p class="error-msg">Oops! An unexpected error occurred 🤕. Please refresh and try again.</p>
 
         <p class="error-msg">If the error reads 'Error fetching recipes', it might be due to reaching monthly limits on our free third-party tools. These limits reset at the beginning 
