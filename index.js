@@ -16,7 +16,9 @@ mainBtn.addEventListener('click', function () {
         const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
         console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
 
-        main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
+        console.log(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
+
+        // main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
         mainBtn.innerText = 'Reset'
     } else {
         location.reload()

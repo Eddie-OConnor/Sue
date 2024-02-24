@@ -90,27 +90,23 @@ input[type='text']{
     font-size: 18px;
 }
 
-#cooking-equipment{
-    width: 50%;
-}
-
 label{
     font-size: 20px;
     font-weight: normal;
 }
 
-#total-people, #cooking-time{
+#total-people, #cooking-time, #cooking-equipment{
     height: 30px;
     border: solid 2px black;
     border-radius: 10px;
-    text-align: center;
+    text-align: left;
     background-color: #f2ffff;
     font-size: 18px;
 }
 
-#cooking-time{
-    width: 50%;
+#cooking-time, #cooking-equipment{
     height: 35px;
+    width: 60%;
 }
 
 #main-btn{
@@ -297,7 +293,7 @@ a{
         display: inline;
     }
 
-    #cooking-time{
+    #cooking-time, #cooking-equipment{
         width: 30%;
     }
 
