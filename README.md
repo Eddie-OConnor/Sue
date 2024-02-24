@@ -24,6 +24,9 @@
 3. Review returned recipes, clicking the tile if you'd like to learn more and cook
 4. Reset button to submit a new request
 
+## Future Improvements
+We will add in an allergies and dislikes question for Sue to process in order to avoid recommending recipes that a user cannot eat or will not like. This was included in the initial build; however, the assistant could not handle the complexity. This feature can be added in when assistant is more advanced and out of beta or when GPT model improvements are released.
+
 ## Contributing
 Contributions are welcome! Please follow these guidelines:
 - Fork the repository.
