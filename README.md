@@ -5,7 +5,7 @@
 
 ## Technologies Used
 - HTML, JS, CSS
-- OpenAI (assistant, function/tools, gpt)
+- OpenAI (assistant, function/tools, gpt, dall-e)
 - SERP API
 - Frontend: Vite
 - Backend: Netlify
