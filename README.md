@@ -41,6 +41,7 @@ Contributions are welcome! Please follow these guidelines:
 - [Vite](https://vitejs.dev/)
 - [Netlify](https://www.netlify.com/)
 - [SERP API](https://serpapi.com/)
+- [Cloudinary(https://cloudinary.com/)
 
 ## License
 This project is open source. [License details](LICENSE)
