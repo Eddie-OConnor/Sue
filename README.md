@@ -4,7 +4,7 @@
 "Sue," derived from and shortened for "Sous Chef," is your culinary companion that suggests personalized recipes after you answer a brief six-question survey. Say goodbye to meal planning uncertainty and elevate your home cooking game with Sue's tailored recommendations, introducing you to dishes you might not have discovered on your own. For recipe inspiration, turn to Sue, your trusty assistant, and let the executive chef within you shine.
 
 ## Technologies Used
-- HTML, JS, CSS
+- HTML, JS, CSS (mobile first, responsive design)
 - OpenAI (assistant, function/tools, gpt, dall-e)
 - SERP API
 - Frontend: Vite
