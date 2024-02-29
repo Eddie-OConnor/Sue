@@ -15,9 +15,9 @@
    git clone https://github.com/your-username/sue.git
    cd sue
 2. Connect repo to Netlify
-   ``` netlify cli
+   `netlify cli`
 4. Install dependencies
-    `npm install`
+   `npm install`
 6. Add `OPENAI_API_KEY`, `SERP_API_KEY`, and `asstId` as environment variables
 7. Create assistant by referencing assistant-build.txt
 8. Add `asstId` as environment variable
