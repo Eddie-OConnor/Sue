@@ -4,20 +4,23 @@
 "Sue," derived from and shortened for "Sous Chef," is your culinary companion that suggests personalized recipes after you answer a brief six-question survey. Say goodbye to meal planning uncertainty and elevate your home cooking game with Sue's tailored recommendations, introducing you to dishes you might not have discovered on your own. For recipe inspiration, turn to Sue, your trusty assistant, and let the executive chef within you shine.
 
 ## Technologies Used
-- HTML, JS, CSS (mobile first, responsive design)
-- OpenAI (assistant, function/tools, gpt, dall-e)
-- SERP API
-- Frontend: Vite
-- Backend: Netlify
-- Cloudinary CDN
+- **Frontend:** HTML, JS, CSS (mobile first, responsive design), Vite
+- **Backend:** Netlify
+- **AI Models:** OpenAI (Assistant, Function/Tools, GPT, DALL-E)
+- **APIs:** SERP API, Cloudinary CDN
 
 ## Installation Instructions
-1. Clone the repository
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/sue.git
+   cd sue
 2. Connect repo to Netlify
-3. Install dependencies: `npm install`
-4. Add `OPENAI_API_KEY`, `SERP_API_KEY`, and `asstId` as environment variables
-5. Create assistant by referencing assistant-build.txt
-6. Add `asstId` as environment variable
+   ``` netlify cli
+4. Install dependencies
+    `npm install`
+6. Add `OPENAI_API_KEY`, `SERP_API_KEY`, and `asstId` as environment variables
+7. Create assistant by referencing assistant-build.txt
+8. Add `asstId` as environment variable
 
 ## Usage
 1. Complete form of questions
