@@ -102,6 +102,12 @@ label{
     text-align: left;
     background-color: #f2ffff;
     font-size: 18px;
+    padding-left: 5px;
+}
+
+#total-people{
+    text-align: center;
+    width: 10%;
 }
 
 #cooking-time, #cooking-equipment{
