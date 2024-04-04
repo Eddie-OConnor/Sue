@@ -29,9 +29,10 @@ async function main(ingredients, additionalIngredients, people, time, equipment)
         loading('loadingGetRecipes')
         const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment)
         loading('loadingGetFormattedRecipes')
-        const recipeResponseString = JSON.stringify(recipeResponse)
-        const formattedRecipes = await getformattedRecipes(recipeResponseString)
-        const recipeArray = JSON.parse(formattedRecipes)
+        // const recipeResponseString = JSON.stringify(recipeResponse)
+        // const formattedRecipes = await getformattedRecipes(recipeResponseString)
+        console.log(recipeResponse)
+        const recipeArray = JSON.parse(recipeResponse)
         stopLoading()
         renderRecipes(recipeArray)
     } catch (e) {
@@ -43,7 +44,7 @@ async function main(ingredients, additionalIngredients, people, time, equipment)
 
 async function getRecipes(ingredients, additionalIngredients, people, time, equipment){
     try {
-        const response = await fetch('/.netlify/functions/fetchAI', { 
+        const response = await fetch('https://fetch-recipes-worker.eddie-oconnor3.workers.dev', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -52,7 +53,9 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         })
         if(response.ok){
             const data = await response.json()
-            return data.data[0].content[0].text.value
+            console.log(data)
+            return data
+            // return data.data[0].content[0].text.value
         } else {
             throw new Error('Error fetching recipes.')
         }
@@ -64,27 +67,27 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
 }
 
 
-async function getformattedRecipes(recipeResponseString){
-    try {
-        const response = await fetch('/.netlify/functions/formatRecipes', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({recipeResponseString})
-        })
-        if(response.ok){
-            const data = await response.json()
-            return data.jsonRecipes.choices[0].message.content
-        } else {
-            throw new Error('Error formatting recipes.')
-        }
-    } catch (e) {
-        stopLoading()
-        errorMessage(mainBtn, e.message)
-        console.error('Error formatting recipes.', e)
-    }
-}
+// async function getformattedRecipes(recipeResponseString){
+//     try {
+//         const response = await fetch('/.netlify/functions/formatRecipes', { 
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({recipeResponseString})
+//         })
+//         if(response.ok){
+//             const data = await response.json()
+//             return data.jsonRecipes.choices[0].message.content
+//         } else {
+//             throw new Error('Error formatting recipes.')
+//         }
+//     } catch (e) {
+//         stopLoading()
+//         errorMessage(mainBtn, e.message)
+//         console.error('Error formatting recipes.', e)
+//     }
+// }
 
 
 async function renderRecipes(recipeArray){

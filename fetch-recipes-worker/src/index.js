@@ -1,16 +1,18 @@
-// import { openai } from '../../config/openai.config'
-// import { asstId } from '../../config/assistant.config'
-// import { serpApiKey } from '../../config/serpApi.config'
-
 import OpenAI from 'openai';
 
-// import { getJson } from 'serpapi'
-
-// import { GoogleSearch } from 'serpapi';
-// const serpApi = new GoogleSearch(serpApiKey);
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type'
+  }
 
 export default {
-	async fetch(request, env, ctx) {
+    async fetch(request, env, ctx) {
+
+        if (request.method === 'OPTIONS'){
+            return new Response(null, { headers: corsHeaders })
+        }
+
         if (!env.OPENAI_API_KEY) throw new Error("OpenAI API key is missing or invalid.");
         const openai = new OpenAI({
             apiKey: env.OPENAI_API_KEY,
@@ -20,27 +22,27 @@ export default {
         const asstId = env.asstId
 
         try {
-            const ingredients = 'salmon'
-            const additionalIngredients = 'yes'
-            const people = 2
-            const time = '1 hour'
-            const equipment = 'oven/stovetop'
-            // const { ingredients, additionalIngredients, people, time, equipment } = JSON.parse(event.body)
+            // const ingredients = 'salmon'
+            // const additionalIngredients = 'yes'
+            // const people = 2
+            // const time = '1 hour'
+            // const equipment = 'oven/stovetop'
+            const { ingredients, additionalIngredients, people, time, equipment } = request.json()
             const run = await createAndRun(asstId, ingredients, additionalIngredients, people, time, equipment, openai)
             let currentRun = await retrieveRun(run.thread_id, run.id, openai)
-    
+
             while (currentRun.status !== 'completed') {
                 await new Promise(resolve => setTimeout(resolve, 1500))
                 console.log(currentRun.status)
                 currentRun = await retrieveRun(run.thread_id, run.id, openai)
-    
+
                 if (currentRun.status === 'requires_action') {
                     console.log(currentRun.status)
                     const toolCalls = currentRun.required_action.submit_tool_outputs.tool_calls
                     const parsedArguments = JSON.parse(toolCalls[0].function.arguments)
                     const apiResponse = await google(parsedArguments.query, env)
                     const response = await openai.beta.threads.runs.submitToolOutputs(
-                        run.thread_id, 
+                        run.thread_id,
                         run.id,
                         {
                             tool_outputs: [
@@ -55,21 +57,20 @@ export default {
                     currentRun = await retrieveRun(run.thread_id, run.id, openai)
                 }
             }
-            const { data } = await listMessages(run.thread_id, openai)
-            console.log(data[0].content)
-            // return {
+            const data = await listMessages(run.thread_id, openai)
+            const rawRecipes = JSON.stringify(data.data[0].content[0].text.value)
+            const formattedRecipes = await formatRecipe(rawRecipes, openai)
+            // return new Response({
             //     statusCode: 200,
-            //     body: JSON.stringify({ data }),
-            // }
-            return new Response({
-                    statusCode: 200,
-                    body: JSON.stringify({ data }),
-                });
+            //     body: JSON.stringify(formattedRecipes),
+            // });
+            return new Response(JSON.stringify(formattedRecipes), { headers: corsHeaders })
         } catch (e) {
-            console.error('error:', e)
-            return { statusCode: 500, body: e.toString() }
+            // console.error('error:', e)
+            // return { statusCode: 500, body: e.toString() }
+            return new Response (e, { headers: corsHeaders })
         }
-	},
+    },
 };
 
 
@@ -113,32 +114,18 @@ async function retrieveRun(thread, run, openai) {
 async function google(query, env) {
 
     if (!env.SERP_API_KEY) throw new Error("SERP API key is missing or invalid.");
-        const serpApiKey = env.SERP_API_KEY
+    const serpApiKey = env.SERP_API_KEY
 
     try {
-        // const response = await getJson({
-        //     engine: 'google',
-        //     api_key: serpApiKey,
-        //     q: query,
-        // })
-        const formData = new FormData();
-        formData.append('engine', 'google');
-        formData.append('api_key', serpApiKey);
-        formData.append('q', query);
+        const response = await fetch(`https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(query)}&api_key=${serpApiKey}`)
 
-        const response = await fetch('https://serpapi.com/search', {
-            method: 'POST',
-            body: formData
-        })
-
-        const data = await response.json()
-
-        if(response.ok){
+        if (response.ok) {
+            const data = await response.json()
+            console.log(data, 'google function')
             return data['recipes_results']
         } else {
-            throw new Error(`SerpAPI request failed with status ${response.status}: ${data.error}`)
+            throw new Error(`SerpAPI request failed with status ${response.status}: ${response.error}`)
         }
-        // return response['recipes_results']
     } catch (e) {
         console.error('error with SERP API', e)
     }
@@ -150,5 +137,61 @@ async function listMessages(thread, openai) {
         return await openai.beta.threads.messages.list(thread)
     } catch (e) {
         console.error('error listing messages for thread: ' + thread, e)
+    }
+}
+
+
+async function formatRecipe(recipes, openai) {
+    try {
+        const response = await openai.chat.completions.create({
+            messages: [
+                {
+                    role: 'system',
+                    content: `You are an assistant that converts user messages into proper json 
+                    format. Each recipe should be its own object and each item within recipe (title, url, 
+                    rating, time, ingredients, thumbnail, and description) should be a parameter. Please 
+                    format your response like this:
+
+                    [
+                        {
+                            "title": "title",
+                            "url": "url",
+                            "rating": "X ⭐ (Y Reviews)",
+                            "time": "time",
+                            "ingredients": "ingredient1, ingredient2, ingredient3",
+                            "thumbnail": "thumbnail.jpeg",
+                            "description": "description"
+                        },
+                        {
+                            "title": "title",
+                            "url": "url",
+                            "rating": "X ⭐ (Y Reviews)",
+                            "time": "time",
+                            "ingredients": "ingredient1, ingredient2, ingredient3",
+                            "thumbnail": "thumbnail.jpeg",
+                            "description": "description"
+                        },
+                        {
+                            "title": "title",
+                            "url": "url",
+                            "rating": "X ⭐ (Y Reviews)",
+                            "time": "time",
+                            "ingredients": "ingredient1, ingredient2, ingredient3",
+                            "thumbnail": "thumbnail.jpeg",
+                            "description": "description"
+                        },
+                    ]
+                    `
+                },
+                {
+                    role: 'user',
+                    content: `${recipes}`
+                }
+            ],
+            model: 'gpt-3.5-turbo-0125'
+        })
+        return response
+    } catch (e) {
+        console.error('Error converting recipes to JSON', e)
     }
 }
