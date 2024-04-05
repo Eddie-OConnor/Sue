@@ -129,6 +129,3 @@ dist
 to-do.txt
 .env
 sandbox.js
-
-# Local Netlify folder
-.netlify
