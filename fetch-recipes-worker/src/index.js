@@ -16,6 +16,7 @@ export default {
         if (!env.OPENAI_API_KEY) throw new Error("OpenAI API key is missing or invalid.");
         const openai = new OpenAI({
             apiKey: env.OPENAI_API_KEY,
+            baseURL: 'https://gateway.ai.cloudflare.com/v1/68afc43fd4d9be84c7eecdf017e269db/sue-chef/openai'
         });
 
         if (!env.asstId) throw new Error("OpenAI Assistant ID is missing or invalid.");
