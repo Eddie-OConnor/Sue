@@ -22,12 +22,7 @@ export default {
         const asstId = env.asstId
 
         try {
-            // const ingredients = 'salmon'
-            // const additionalIngredients = 'yes'
-            // const people = 2
-            // const time = '1 hour'
-            // const equipment = 'oven/stovetop'
-            const { ingredients, additionalIngredients, people, time, equipment } = request.json()
+            const { ingredients, additionalIngredients, people, time, equipment } = await request.json()
             const run = await createAndRun(asstId, ingredients, additionalIngredients, people, time, equipment, openai)
             let currentRun = await retrieveRun(run.thread_id, run.id, openai)
 
@@ -60,14 +55,8 @@ export default {
             const data = await listMessages(run.thread_id, openai)
             const rawRecipes = JSON.stringify(data.data[0].content[0].text.value)
             const formattedRecipes = await formatRecipe(rawRecipes, openai)
-            // return new Response({
-            //     statusCode: 200,
-            //     body: JSON.stringify(formattedRecipes),
-            // });
-            return new Response(JSON.stringify(formattedRecipes), { headers: corsHeaders })
+            return new Response(JSON.stringify({ formattedRecipes }), { headers: corsHeaders })
         } catch (e) {
-            // console.error('error:', e)
-            // return { statusCode: 500, body: e.toString() }
             return new Response (e, { headers: corsHeaders })
         }
     },
@@ -97,7 +86,7 @@ async function createAndRun(assistant, ingredients, additionalIngredients, peopl
         )
         return response
     } catch (e) {
-        console.error('Error running assistant for thread: ' + thread, e)
+        throw new Error('Error creating and running assistant for thread: ', e)
     }
 }
 
@@ -106,7 +95,7 @@ async function retrieveRun(thread, run, openai) {
     try {
         return await openai.beta.threads.runs.retrieve(thread, run)
     } catch (e) {
-        console.error('Error retrieving run for: ' + thread, e)
+        throw new Error('Error retrieving run for: ' + thread, e)
     }
 }
 
@@ -121,13 +110,12 @@ async function google(query, env) {
 
         if (response.ok) {
             const data = await response.json()
-            console.log(data, 'google function')
             return data['recipes_results']
         } else {
             throw new Error(`SerpAPI request failed with status ${response.status}: ${response.error}`)
         }
     } catch (e) {
-        console.error('error with SERP API', e)
+        throw new Error('error with SERP API', e)
     }
 }
 
@@ -136,7 +124,7 @@ async function listMessages(thread, openai) {
     try {
         return await openai.beta.threads.messages.list(thread)
     } catch (e) {
-        console.error('error listing messages for thread: ' + thread, e)
+        throw new Error('error listing messages for thread: ' + thread, e)
     }
 }
 
@@ -192,6 +180,6 @@ async function formatRecipe(recipes, openai) {
         })
         return response
     } catch (e) {
-        console.error('Error converting recipes to JSON', e)
+        throw new Error('Error with OpenAI formatting recipes to JSON', e)
     }
 }

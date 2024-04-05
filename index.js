@@ -14,7 +14,6 @@ mainBtn.addEventListener('click', function () {
     if (action === 'submit') {
         action = 'reset'
         const additionalIngredients = additionalIngredientForm.querySelector('input[type="radio"]:checked').value
-
         main(ingredients.value, additionalIngredients, people.value, time.value, equipment.value)
         mainBtn.innerText = 'Reset'
     } else {
@@ -29,15 +28,17 @@ async function main(ingredients, additionalIngredients, people, time, equipment)
         loading('loadingGetRecipes')
         const recipeResponse = await getRecipes(ingredients, additionalIngredients, people, time, equipment)
         loading('loadingGetFormattedRecipes')
-        // const recipeResponseString = JSON.stringify(recipeResponse)
-        // const formattedRecipes = await getformattedRecipes(recipeResponseString)
-        console.log(recipeResponse)
+
+        // consolodated two netlify functions into one cloudflare worker function. 
+        // this promise is here just so the second loading graphic still shows. previously it ran after getRecipes and before getFormattedRecipes (depricated)
+        await new Promise(resolve => setTimeout(resolve, 1500))
+
         const recipeArray = JSON.parse(recipeResponse)
         stopLoading()
         renderRecipes(recipeArray)
     } catch (e) {
         stopLoading()
-        throw e
+        throw new Error('Error running main function', e)
     }
 }
 
@@ -53,11 +54,9 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         })
         if(response.ok){
             const data = await response.json()
-            console.log(data)
-            return data
-            // return data.data[0].content[0].text.value
+            return data.formattedRecipes.choices[0].message.content
         } else {
-            throw new Error('Error fetching recipes.')
+            throw new Error('Error fetching recipes from cloudflare worker.')
         }
     } catch (e) {
         stopLoading()
@@ -65,29 +64,6 @@ async function getRecipes(ingredients, additionalIngredients, people, time, equi
         console.error('Error fetching recipes.', e)
     }
 }
-
-
-// async function getformattedRecipes(recipeResponseString){
-//     try {
-//         const response = await fetch('/.netlify/functions/formatRecipes', { 
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({recipeResponseString})
-//         })
-//         if(response.ok){
-//             const data = await response.json()
-//             return data.jsonRecipes.choices[0].message.content
-//         } else {
-//             throw new Error('Error formatting recipes.')
-//         }
-//     } catch (e) {
-//         stopLoading()
-//         errorMessage(mainBtn, e.message)
-//         console.error('Error formatting recipes.', e)
-//     }
-// }
 
 
 async function renderRecipes(recipeArray){

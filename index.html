@@ -23,7 +23,7 @@
 
     <main>
 
-        <div id="form-container" class="hidden">
+        <div id="form-container">
 
             <div class="question-container">
                 <h3 class="question">What ingredients do want to use?</h3>
@@ -73,8 +73,10 @@
         </div>
 
         <div id="error-container">
-            <!-- error message appears here -->
-            <p class="error-msg">This app is undergoing some maintenance. Please check back or reach out to Ed for a timeline. We appreciate your patience!</p>
+            <!-- if fetch returns error, message appears here -->
+
+            <!-- below text uncommented while work is being done to the app -->
+            <!-- <p class="error-msg">This app is undergoing some maintenance. Please check back or reach out to Ed for a timeline. We appreciate your patience!</p> -->
         </div>
 
         <div id="loading-graphic-container">
@@ -85,7 +87,7 @@
             <!-- recipes load here -->  
         </div>
 
-        <div class="center hidden">
+        <div class="center">
             <button id="main-btn" type="submit" disabled>Submit</button>
         </div>
         
